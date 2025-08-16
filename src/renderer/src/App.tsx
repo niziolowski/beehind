@@ -1,7 +1,41 @@
-function App(): React.JSX.Element {
-  // const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')
+import { useCallback, useEffect, useState } from 'react'
+import Settings from './components/Settings'
 
-  return <div>Hi</div>
+function App() {
+  const [shopifyToken, setShopifyToken] = useState<string | null>(null)
+
+  const handleInputChange = (e: any): void => {
+    if (!e.target.value) return
+    setShopifyToken(e.target.value)
+  }
+
+  useEffect(() => {
+    const handler = async () => {
+      try {
+        const token = await window.api.database.getShopifyToken()
+        console.log(token)
+        return setShopifyToken(token)
+      } catch (error) {
+        console.error(error)
+        return null
+      }
+    }
+
+    handler()
+  }, [])
+
+  const handleSave = useCallback(async () => {
+    if (shopifyToken) await window.api.database.updateShopifyToken(shopifyToken)
+  }, [shopifyToken])
+
+  return (
+    <div>
+      <Settings />
+      <input onChange={handleInputChange} className="border" />
+      <button onClick={handleSave}>test</button>
+      <div>{shopifyToken}</div>
+    </div>
+  )
 }
 
 export default App
