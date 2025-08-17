@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useState } from 'react'
 import Settings from './components/Settings'
+import { useErrorStore } from './stores'
+import ErrorModal from './components/ErrorModal'
 
 function App() {
   const [shopifyToken, setShopifyToken] = useState<string | null>(null)
-
+  const showError = useErrorStore((state) => state.showError)
   const handleInputChange = (e: any): void => {
     if (!e.target.value) return
     setShopifyToken(e.target.value)
@@ -20,9 +22,9 @@ function App() {
         return null
       }
     }
-
+    showError('Something went wrong')
     handler()
-  }, [])
+  }, [showError])
 
   const handleSave = useCallback(async () => {
     if (shopifyToken) await window.api.database.updateShopifyToken(shopifyToken)
@@ -34,6 +36,7 @@ function App() {
       <input onChange={handleInputChange} className="border" />
       <button onClick={handleSave}>test</button>
       <div>{shopifyToken}</div>
+      <ErrorModal />
     </div>
   )
 }
