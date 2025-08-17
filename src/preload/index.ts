@@ -9,6 +9,11 @@ const apiHandler = {
     getShopifyToken: (): Promise<string> => ipcRenderer.invoke('db:getShopifyToken'),
     updateShopifyToken: (token: string): Promise<string> =>
       ipcRenderer.invoke('db:updateShopifyToken', token)
+  },
+  theme: {
+    light: () => ipcRenderer.invoke('theme:light'),
+    dark: () => ipcRenderer.invoke('theme:dark'),
+    system: () => ipcRenderer.invoke('theme:system')
   }
 }
 

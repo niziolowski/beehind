@@ -22,7 +22,7 @@ function App() {
         return null
       }
     }
-    showError('Something went wrong')
+
     handler()
   }, [showError])
 
@@ -31,7 +31,30 @@ function App() {
   }, [shopifyToken])
 
   return (
-    <div>
+    <div className="bg-beeBlue">
+      <button
+        onClick={() => {
+          window.api.theme.light()
+        }}
+        className="border"
+      >
+        Toggle Light Mode
+      </button>
+      <button
+        onClick={() => {
+          window.api.theme.dark()
+        }}
+        className="border"
+      >
+        Toggle Dark Mode
+      </button>
+      <button
+        onClick={() => {
+          window.api.theme.system()
+        }}
+      >
+        Reset to System Theme
+      </button>
       <Settings />
       <input onChange={handleInputChange} className="border" />
       <button onClick={handleSave}>test</button>
