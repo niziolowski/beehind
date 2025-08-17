@@ -31,7 +31,7 @@ function App() {
   }, [shopifyToken])
 
   return (
-    <div className="bg-beeBlue">
+    <div className="bg-background">
       <button
         onClick={() => {
           window.api.theme.light()

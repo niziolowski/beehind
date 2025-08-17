@@ -1,13 +1,17 @@
 @import 'tailwindcss';
 
+:root {
+  --color-background: red;
+  --color-text: #000000;
+}
+
 @media (prefers-color-scheme: dark) {
-  body {
-    background-color: #333;
+  :root {
+    --color-background: green;
+    --color-text: #ffffff;
   }
 }
 
-@media (prefers-color-scheme: light) {
-  body {
-    background-color: #ddd;
-  }
+@theme {
+  --color-background: var(--color-background);
 }
