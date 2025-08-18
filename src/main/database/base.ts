@@ -1,5 +1,6 @@
 import { app } from 'electron'
 import path from 'path'
+import { DatabaseSchema } from '../types/database'
 
 export class BaseDatabaseService {
   public db: {

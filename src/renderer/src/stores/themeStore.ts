@@ -1,11 +1,12 @@
+import { ThemeMode, ThemePalette } from '@main/types/database'
 import { create } from 'zustand'
 
 interface ThemeState {
-  mode: 'light' | 'dark' | 'system' | null
-  palette: 'mono' | 'colorful' | null
+  mode: ThemeMode | null
+  palette: ThemePalette | null
   initialize: () => void
-  setMode: (mode: ThemeState['mode']) => void
-  setPalette: (palette: ThemeState['palette']) => void
+  setMode: (mode: ThemeMode) => void
+  setPalette: (palette: ThemePalette) => void
 }
 
 export const useThemeStore = create<ThemeState>()((set) => ({
@@ -20,7 +21,7 @@ export const useThemeStore = create<ThemeState>()((set) => ({
     })
   },
 
-  setMode: (mode: ThemeState['mode']) => {
+  setMode: (mode: ThemeMode) => {
     window.api.theme.setThemeMode(mode)
     return set((state: ThemeState) => ({
       ...state,
@@ -28,7 +29,7 @@ export const useThemeStore = create<ThemeState>()((set) => ({
     }))
   },
 
-  setPalette: (palette: ThemeState['palette']) => {
+  setPalette: (palette: ThemePalette) => {
     window.api.theme.setThemePalette(palette)
     return set((state: ThemeState) => ({
       ...state,

@@ -1,5 +1,6 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
+import { ThemeMode, ThemePalette } from '../main/types/database'
 
 // Custom APIs for renderer
 const apiHandler = {

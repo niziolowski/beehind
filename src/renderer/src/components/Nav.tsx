@@ -4,10 +4,11 @@ import NavItem from './NavItem'
 import { useEffect, useState, JSX } from 'react'
 
 import { NavLink, useLocation } from 'react-router-dom'
+import { useThemeStore } from '@renderer/stores/themeStore'
 
 type NavItem = {
   to: string
-  icon: (active: boolean) => JSX.Element
+  icon: JSX.Element
   label: string
   color: string
 }
@@ -15,41 +16,41 @@ type NavItem = {
 const navItems: NavItem[] = [
   {
     to: '/home',
-    icon: (active) => <FaHome className={`${active ? 'text-font-light' : '!text-red'}`} />,
+    icon: <FaHome />,
     label: 'Home',
-    color: '!bg-red'
+    color: 'bg-red'
   },
   {
     to: '/orders',
-    icon: (active) => <FiSidebar className={`${active ? 'text-font-light' : '!text-violet'}`} />,
+    icon: <FiSidebar />,
     label: 'Orders',
-    color: '!bg-violet'
+    color: 'bg-violet'
   },
   {
     to: '/products',
-    icon: (active) => (
-      <FiShoppingCart className={`${active ? 'text-font-light' : '!text-green'}`} />
-    ),
+    icon: <FiShoppingCart />,
     label: 'Products',
-    color: '!bg-green'
+    color: 'bg-green'
   },
   {
     to: '/components',
-    icon: (active) => <FiList className={`${active ? 'text-font-light' : '!text-blue'}`} />,
+    icon: <FiList />,
     label: 'Components',
-    color: '!bg-blue'
+    color: 'bg-blue'
   },
   {
     to: '/rules',
-    icon: (active) => <FaSitemap className={`${active ? 'text-font-light' : 'text-brown'}`} />,
+    icon: <FaSitemap />,
     label: 'Rules',
-    color: '!bg-brown'
+    color: 'bg-brown'
   }
 ]
 
 const Nav = () => {
   const [view, setView] = useState<string>('')
   const location = useLocation()
+
+  const { palette } = useThemeStore()
 
   useEffect(() => {
     const path = location.pathname.split('/')[1]
@@ -68,12 +69,12 @@ const Nav = () => {
           return (
             <NavItem
               key={item.to}
-              className={active ? `${item.color}` : ''}
+              className={active && palette === 'colorful' ? `!${item.color}` : ''}
               to={item.to}
               active={active}
               onClick={() => setView(item.label.toLowerCase())}
             >
-              {item.icon(active)}
+              {item.icon}
               {item.label}
             </NavItem>
           )

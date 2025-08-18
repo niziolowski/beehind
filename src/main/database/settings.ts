@@ -1,5 +1,6 @@
 import { nativeTheme, safeStorage } from 'electron'
 import { BaseDatabaseService } from './base'
+import { ThemeMode, ThemePalette } from '../types/database'
 
 export class SettingsRepository extends BaseDatabaseService {
   // Update Shopify token

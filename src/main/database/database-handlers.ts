@@ -1,6 +1,7 @@
 import { ipcMain, dialog } from 'electron'
 import { promises as fs } from 'fs'
 import { databaseService } from './index'
+import { DatabaseSchema, ThemeMode, ThemePalette } from '../types/database'
 /**
  * Database IPC handlers
  * Handles all database-related communication between main and renderer processes

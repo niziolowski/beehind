@@ -1,17 +1,17 @@
-type ThemeMode = 'light' | 'dark' | 'system'
-type ThemePalette = 'mono' | 'colorful'
+export type ThemeMode = 'light' | 'dark' | 'system'
+export type ThemePalette = 'mono' | 'colorful'
 
-type Theme = {
+export type Theme = {
   mode: ThemeMode
   palette: ThemePalette
 }
 
-interface Settings {
+export interface Settings {
   shopifyToken: string | null
   theme: Theme
 }
 
 // Database schema interface
-interface DatabaseSchema {
+export interface DatabaseSchema {
   settings: Settings
 }
