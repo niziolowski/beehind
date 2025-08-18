@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import ShopifyTokenSetting from './ShopifyTokenSetting'
 
 const Settings = () => {
   const [shopifyToken, setShopifyToken] = useState<string | null>(null)
@@ -26,6 +27,14 @@ const Settings = () => {
   const handleSave = useCallback(async () => {
     if (shopifyToken) await window.api.database.updateShopifyToken(shopifyToken)
   }, [shopifyToken])
+
+  return (
+    <div className="bg-background w-full">
+      <h1 className="p-10">Settings</h1>
+      <ShopifyTokenSetting />
+    </div>
+  )
+
   return (
     <div className="w-full h-full bg-background">
       <button

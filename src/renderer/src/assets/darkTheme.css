@@ -2,6 +2,8 @@
   :root {
     --color-background: #333;
     --color-primary: #555;
-    --color-text: white;
+    --color-font: white;
+
+    color: var(--color-font);
   }
 }

@@ -1,8 +1,17 @@
 @import 'tailwindcss';
 @import './lightTheme.css';
 @import './darkTheme.css';
-
+/* TODO: ADD a nice font */
 @theme {
   --color-background: var(--color-background);
   --color-primary: var(--color-primary);
+  --color-font: var(--color-font);
+}
+
+.hover {
+  @apply hover:brightness-95 active:brightness-90;
+}
+
+h1 {
+  @apply text-4xl font-medium text-font font-serif;
 }
