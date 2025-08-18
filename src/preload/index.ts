@@ -11,9 +11,10 @@ const apiHandler = {
       ipcRenderer.invoke('db:updateShopifyToken', token)
   },
   theme: {
-    light: () => ipcRenderer.invoke('theme:light'),
-    dark: () => ipcRenderer.invoke('theme:dark'),
-    system: () => ipcRenderer.invoke('theme:system')
+    getThemeMode: () => ipcRenderer.invoke('theme:getMode'),
+    setThemeMode: (mode: ThemeMode) => ipcRenderer.invoke('theme:setMode', mode),
+    getThemePalette: () => ipcRenderer.invoke('theme:getPalette'),
+    setThemePalette: (palette: ThemePalette) => ipcRenderer.invoke('theme:setPalette', palette)
   }
 }
 

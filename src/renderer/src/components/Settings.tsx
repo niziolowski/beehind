@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import ShopifyTokenSetting from './ShopifyTokenSetting'
+import ThemeSelector from './ThemeSelector'
 
 const Settings = () => {
   const [shopifyToken, setShopifyToken] = useState<string | null>(null)
@@ -29,41 +30,15 @@ const Settings = () => {
   }, [shopifyToken])
 
   return (
-    <div className="bg-background w-full">
-      <h1 className="p-10">Settings</h1>
-      <ShopifyTokenSetting />
-    </div>
-  )
-
-  return (
-    <div className="w-full h-full bg-background">
-      <button
-        onClick={() => {
-          window.api.theme.light()
-        }}
-        className="border"
-      >
-        Toggle Light Mode
-      </button>
-      <button
-        onClick={() => {
-          window.api.theme.dark()
-        }}
-        className="border"
-      >
-        Toggle Dark Mode
-      </button>
-      <button
-        onClick={() => {
-          window.api.theme.system()
-        }}
-      >
-        Reset to System Theme
-      </button>
-
-      <input onChange={handleInputChange} className="border" />
-      <button onClick={handleSave}>test</button>
-      <div>{shopifyToken}</div>
+    <div className="bg-background w-full pt-10 flex flex-col gap-10">
+      <div className="flex flex-col gap-5">
+        <h1 className="px-10">Settings</h1>
+        <ShopifyTokenSetting />
+      </div>
+      <div className="flex flex-col gap-5">
+        <h1 className="px-10">Theme</h1>
+        <ThemeSelector />
+      </div>
     </div>
   )
 }

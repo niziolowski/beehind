@@ -24,12 +24,18 @@ export function createWindow(): BrowserWindow {
     width: windowState.width,
     height: windowState.height,
     show: false,
+    minWidth: 500,
+    minHeight: 600,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false
-    }
+    },
+    // Top bar
+    titleBarStyle: 'hidden', // remove the default titlebar
+    // expose window controls in Windows/Linux
+    ...(process.platform !== 'darwin' ? { titleBarOverlay: true } : {})
   })
 
   mainWindow.on('ready-to-show', () => {

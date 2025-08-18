@@ -1,7 +1,14 @@
 :root {
-  --color-background: #ddd;
-  --color-primary: #ccc;
+  --color-background: #ffffff;
+  --color-border: #ccc;
+  --color-primary: #f2f2f2;
   --color-font: #333;
+  --color-font-light: #fff;
+  --color-red: #d85656;
+  --color-green: #416c43;
+  --color-blue: #4d89ce;
+  --color-violet: #7c659f;
+  --color-brown: #6b5a49;
 
   color: var(--color-font);
 }

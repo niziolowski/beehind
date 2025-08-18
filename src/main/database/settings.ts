@@ -1,7 +1,8 @@
-import { safeStorage } from 'electron'
+import { nativeTheme, safeStorage } from 'electron'
 import { BaseDatabaseService } from './base'
 
 export class SettingsRepository extends BaseDatabaseService {
+  // Update Shopify token
   async updateShopifyToken(token: string): Promise<string> {
     const db = this.ensureDb()
     await db.read()
@@ -26,5 +27,74 @@ export class SettingsRepository extends BaseDatabaseService {
     const decryptedToken = safeStorage.decryptString(buffer)
 
     return decryptedToken
+  }
+
+  // Get Theme Mode
+  async getThemeMode(): Promise<ThemeMode | null> {
+    const db = this.ensureDb()
+    await db.read()
+
+    if (!db.data.settings.theme) {
+      db.data.settings.theme = {
+        mode: 'system',
+        palette: 'mono'
+      }
+      await db.write()
+    }
+
+    return db.data.settings.theme.mode
+  }
+
+  // Update Theme Mode
+  async setThemeMode(mode: ThemeMode): Promise<ThemeMode> {
+    const db = this.ensureDb()
+    await db.read()
+
+    // Make sure the theme object exists before setting the mode
+    if (!db.data.settings.theme) {
+      db.data.settings.theme = {
+        mode: 'system',
+        palette: 'mono'
+      }
+    }
+
+    db.data.settings.theme.mode = mode
+    nativeTheme.themeSource = mode as ThemeMode
+    await db.write()
+    return mode
+  }
+
+  // Get Theme Palette
+  async getThemePalette(): Promise<ThemePalette | null> {
+    const db = this.ensureDb()
+    await db.read()
+
+    if (!db.data.settings.theme) {
+      db.data.settings.theme = {
+        mode: 'system',
+        palette: 'mono'
+      }
+      await db.write()
+    }
+
+    return db.data.settings.theme.palette
+  }
+
+  // Update Theme Palette
+  async setThemePalette(palette: ThemePalette): Promise<ThemePalette> {
+    const db = this.ensureDb()
+    await db.read()
+
+    // Make sure the theme object exists before setting the mode
+    if (!db.data.settings.theme) {
+      db.data.settings.theme = {
+        mode: 'system',
+        palette: 'mono'
+      }
+    }
+
+    db.data.settings.theme.palette = palette
+    await db.write()
+    return palette
   }
 }

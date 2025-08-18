@@ -64,6 +64,26 @@ export const setupSettingsHandlers = () => {
   ipcMain.handle('db:updateShopifyToken', async (_, token: string): Promise<string> => {
     return databaseService.settings.updateShopifyToken(token)
   })
+
+  // Get Theme mode
+  ipcMain.handle('theme:getMode', (): Promise<ThemeMode | null> => {
+    return databaseService.settings.getThemeMode()
+  })
+
+  // Set Theme mode
+  ipcMain.handle('theme:setMode', (_, mode: ThemeMode): Promise<ThemeMode> => {
+    return databaseService.settings.setThemeMode(mode)
+  })
+
+  // Get Theme palette
+  ipcMain.handle('theme:getPalette', (): Promise<ThemePalette | null> => {
+    return databaseService.settings.getThemePalette()
+  })
+
+  // Set Theme palette
+  ipcMain.handle('theme:setPalette', (_, palette: ThemePalette): Promise<ThemePalette> => {
+    return databaseService.settings.setThemePalette(palette)
+  })
 }
 /**
  * Initialize database and setup handlers

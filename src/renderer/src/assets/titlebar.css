@@ -1,0 +1,5 @@
+.titlebar {
+  @apply bg-transparent h-10 fixed top-0 w-full;
+  app-region: drag;
+  -webkit-app-region: drag;
+}

@@ -1,9 +1,8 @@
-import { app, BrowserWindow, ipcMain, nativeTheme } from 'electron'
+import { app, BrowserWindow, ipcMain } from 'electron'
 import { electronApp, optimizer } from '@electron-toolkit/utils'
 import { createWindow } from './createWindow'
 import { memoryMonitor } from './memoryMonitor'
 import { initializeDatabaseSystem } from './database/database-handlers'
-import { initializeThemeSystem } from './theme/theme'
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -24,8 +23,6 @@ app.whenReady().then(async () => {
 
   // Initialize Database
   await initializeDatabaseSystem()
-  // Initialize Theme
-  initializeThemeSystem()
 
   const mainWindow = createWindow()
 

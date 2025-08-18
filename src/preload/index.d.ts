@@ -6,9 +6,10 @@ interface ApiHandler {
     updateShopifyToken: (token: string) => Promise<string>
   }
   theme: {
-    light: () => void
-    dark: () => void
-    system: () => void
+    getThemeMode: () => ThemeMode
+    setThemeMode: (mode: ThemeMode) => ThemeMode
+    getThemePalette: () => ThemePalette
+    setThemePalette: (palette: ThemePalette) => ThemePalette
   }
 }
 

@@ -10,8 +10,8 @@ interface NavItemProps {
 }
 
 function NavItem({ children, to, className = '', active, onClick }: NavItemProps) {
-  const classes = `flex items-center gap-2 cursor-pointer transition py-2 px-4 rounded-xl text-nowrap bg-primary hover transition-all ${
-    active ? 'bg-stone-200' : ''
+  const classes = `flex items-center gap-2 cursor-pointer transition py-2 px-4 rounded-xl text-nowrap bg-primary hover transition-all font-serif ${
+    active ? 'bg-stone-200 text-font-light' : ''
   } ${className}`
   return (
     <NavLink to={to} className={classes} onClick={onClick}>

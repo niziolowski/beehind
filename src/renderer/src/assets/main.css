@@ -1,11 +1,20 @@
 @import 'tailwindcss';
 @import './lightTheme.css';
 @import './darkTheme.css';
+@import './titleBar.css';
 /* TODO: ADD a nice font */
+
 @theme {
   --color-background: var(--color-background);
+  --color-border: var(--color-border);
   --color-primary: var(--color-primary);
   --color-font: var(--color-font);
+  --color-font-light: var(--color-font-light);
+  --color-red: var(--color-red);
+  --color-green: var(--color-green);
+  --color-blue: var(--color-blue);
+  --color-violet: var(--color-violet);
+  --color-brown: var(--color-brown);
 }
 
 .hover {

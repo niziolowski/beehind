@@ -41,17 +41,15 @@ export class BaseDatabaseService {
       if (!this.db.data) {
         this.db.data = {
           settings: {
-            shopifyToken: null
+            shopifyToken: null,
+            theme: {
+              mode: 'system',
+              palette: 'mono'
+            }
           }
         }
         await this.db.write()
       }
-
-      // Ensure all required collections exist
-      if (!this.db.data.settings)
-        this.db.data.settings = {
-          shopifyToken: null
-        }
 
       // eslint-disable-next-line no-console
       console.log(`Database initialized at: ${this.dbPath}`)
