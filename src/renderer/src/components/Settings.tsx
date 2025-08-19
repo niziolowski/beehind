@@ -36,7 +36,6 @@ const Settings = () => {
         <ShopifyTokenSetting />
       </div>
       <div className="flex flex-col gap-5">
-        <h1 className="px-10">Theme</h1>
         <ThemeSelector />
       </div>
     </div>
