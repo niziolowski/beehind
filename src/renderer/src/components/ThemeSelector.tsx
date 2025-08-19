@@ -2,13 +2,15 @@ import { useThemeStore } from '@renderer/stores/themeStore'
 import Button from './Button'
 
 const ThemeSelector = () => {
-  const { mode, palette, setMode, setPalette } = useThemeStore()
+  const { mode, isColors, setMode, setIsColors } = useThemeStore()
 
   return (
     <div className="flex flex-col px-10 gap-5">
       <div className="flex w-full h-full bg-background gap-5">
-        <button onClick={() => setMode('light')} className="flex flex-col items-center gap-1">
-          <div className="w-30 h-20 rounded-xl overflow-hidden flex border border-border hover">
+        <button onClick={() => setMode('light')} className={`flex flex-col items-center gap-1 `}>
+          <div
+            className={`w-30 h-20 rounded-xl overflow-hidden flex border-2 hover ${mode === 'light' ? 'border-font' : 'border-border'}`}
+          >
             <div className="flex w-12 h-full bg-gray-200 p-2 gap-1">
               <div className="w-1.5 h-1.5 bg-red-400 rounded-full"></div>
               <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full"></div>
@@ -19,7 +21,9 @@ const ThemeSelector = () => {
           <div>Light</div>
         </button>
         <button onClick={() => setMode('dark')} className="flex flex-col items-center gap-1">
-          <div className="w-30 h-20 rounded-xl overflow-hidden flex border border-border hover">
+          <div
+            className={`w-30 h-20 rounded-xl overflow-hidden flex border-2 hover ${mode === 'dark' ? 'border-font' : 'border-border'}`}
+          >
             <div className="flex w-12 h-full bg-stone-700 p-2 gap-1">
               <div className="w-1.5 h-1.5 bg-red-400 rounded-full"></div>
               <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full"></div>
@@ -32,7 +36,7 @@ const ThemeSelector = () => {
         <div className="flex flex-col items-center gap-1">
           <button
             onClick={() => setMode('system')}
-            className="relative flex-none w-30 h-20 rounded-xl overflow-hidden border border-border hover"
+            className={`relative flex-none w-30 h-20 rounded-xl overflow-hidden hover border-2 ${mode === 'system' ? 'border-font' : 'border-border'}`}
           >
             <div className="w-full h-full flex">
               <div className="w-30 h-20 flex">
@@ -56,17 +60,17 @@ const ThemeSelector = () => {
       </div>
       <div className="flex w-full h-full bg-background gap-3">
         <Button
-          className={palette === 'mono' ? 'bg-red text-background' : ''}
+          className={!isColors ? 'bg-red text-background' : ''}
           onClick={() => {
-            setPalette('mono')
+            setIsColors(false)
           }}
         >
           Mono
         </Button>
         <Button
-          className={palette === 'colorful' ? 'bg-red text-background' : ''}
+          className={isColors ? 'bg-red text-background' : ''}
           onClick={() => {
-            setPalette('colorful')
+            setIsColors(true)
           }}
         >
           Colorful
