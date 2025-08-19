@@ -6,7 +6,7 @@ interface ThemeState {
   isColors: boolean | null
   initialize: () => void
   setMode: (mode: ThemeMode) => void
-  setColors: (colors: boolean) => void
+  setIsColors: (colors: boolean) => void
 }
 
 export const useThemeStore = create<ThemeState>()((set) => ({
@@ -30,7 +30,7 @@ export const useThemeStore = create<ThemeState>()((set) => ({
     }))
   },
 
-  setColors: (isColors: boolean) => {
+  setIsColors: (isColors: boolean) => {
     window.api.theme.setThemeIsColors(isColors)
     return set((state: ThemeState) => ({
       ...state,
