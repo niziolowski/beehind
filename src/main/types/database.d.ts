@@ -1,9 +1,8 @@
 export type ThemeMode = 'light' | 'dark' | 'system'
-export type ThemePalette = 'mono' | 'colorful'
 
 export type Theme = {
   mode: ThemeMode
-  palette: ThemePalette
+  isColors: boolean
 }
 
 export interface Settings {

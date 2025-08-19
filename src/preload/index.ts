@@ -1,6 +1,6 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
-import { ThemeMode, ThemePalette } from '../main/types/database'
+import { ThemeMode } from '../main/types/database'
 
 // Custom APIs for renderer
 const apiHandler = {
@@ -14,8 +14,8 @@ const apiHandler = {
   theme: {
     getThemeMode: () => ipcRenderer.invoke('theme:getMode'),
     setThemeMode: (mode: ThemeMode) => ipcRenderer.invoke('theme:setMode', mode),
-    getThemePalette: () => ipcRenderer.invoke('theme:getPalette'),
-    setThemePalette: (palette: ThemePalette) => ipcRenderer.invoke('theme:setPalette', palette)
+    getThemeIsColors: () => ipcRenderer.invoke('theme:getIsColors'),
+    setThemeIsColors: (isColors: boolean) => ipcRenderer.invoke('theme:setIsColors', isColors)
   }
 }
 

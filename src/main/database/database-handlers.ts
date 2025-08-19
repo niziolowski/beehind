@@ -1,7 +1,7 @@
 import { ipcMain, dialog } from 'electron'
 import { promises as fs } from 'fs'
 import { databaseService } from './index'
-import { DatabaseSchema, ThemeMode, ThemePalette } from '../types/database'
+import { DatabaseSchema, ThemeMode } from '../types/database'
 /**
  * Database IPC handlers
  * Handles all database-related communication between main and renderer processes
@@ -76,14 +76,14 @@ export const setupSettingsHandlers = () => {
     return databaseService.settings.setThemeMode(mode)
   })
 
-  // Get Theme palette
-  ipcMain.handle('theme:getPalette', (): Promise<ThemePalette | null> => {
-    return databaseService.settings.getThemePalette()
+  // Get Theme colors
+  ipcMain.handle('theme:getIsColors', (): Promise<boolean | null> => {
+    return databaseService.settings.getThemeIsColors()
   })
 
-  // Set Theme palette
-  ipcMain.handle('theme:setPalette', (_, palette: ThemePalette): Promise<ThemePalette> => {
-    return databaseService.settings.setThemePalette(palette)
+  // Set Theme colors
+  ipcMain.handle('theme:setIsColors', (_, isColors: boolean): Promise<boolean> => {
+    return databaseService.settings.setThemeIsColors(isColors)
   })
 }
 /**

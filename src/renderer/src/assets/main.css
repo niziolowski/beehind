@@ -18,10 +18,14 @@
   --default-font-family: var(--font-serif);
 }
 
-.hover {
-  @apply hover:brightness-95 active:brightness-90;
+body {
+  @apply bg-background;
 }
 
 h1 {
   @apply text-4xl font-medium text-font font-serif;
+}
+
+.hover {
+  @apply hover:brightness-95 active:brightness-90;
 }

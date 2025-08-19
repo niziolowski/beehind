@@ -6,10 +6,10 @@ interface ApiHandler {
     updateShopifyToken: (token: string) => Promise<string>
   }
   theme: {
-    getThemeMode: () => ThemeMode
-    setThemeMode: (mode: ThemeMode) => ThemeMode
-    getThemePalette: () => ThemePalette
-    setThemePalette: (palette: ThemePalette) => ThemePalette
+    getThemeMode: () => Promise<ThemeMode>
+    setThemeMode: (mode: ThemeMode) => Promise<ThemeMode>
+    getThemeIsColors: () => Promise<boolean>
+    setThemeIsColors: (isColors: boolean) => Promise<boolean>
   }
 }
 

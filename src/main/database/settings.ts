@@ -1,6 +1,6 @@
 import { nativeTheme, safeStorage } from 'electron'
 import { BaseDatabaseService } from './base'
-import { ThemeMode, ThemePalette } from '../types/database'
+import { ThemeMode } from '../types/database'
 
 export class SettingsRepository extends BaseDatabaseService {
   // Update Shopify token
@@ -38,7 +38,7 @@ export class SettingsRepository extends BaseDatabaseService {
     if (!db.data.settings.theme) {
       db.data.settings.theme = {
         mode: 'system',
-        palette: 'mono'
+        isColors: true
       }
       await db.write()
     }
@@ -55,7 +55,7 @@ export class SettingsRepository extends BaseDatabaseService {
     if (!db.data.settings.theme) {
       db.data.settings.theme = {
         mode: 'system',
-        palette: 'mono'
+        isColors: true
       }
     }
 
@@ -65,24 +65,24 @@ export class SettingsRepository extends BaseDatabaseService {
     return mode
   }
 
-  // Get Theme Palette
-  async getThemePalette(): Promise<ThemePalette | null> {
+  // Get Theme Colors
+  async getThemeIsColors(): Promise<boolean> {
     const db = this.ensureDb()
     await db.read()
 
     if (!db.data.settings.theme) {
       db.data.settings.theme = {
         mode: 'system',
-        palette: 'mono'
+        isColors: true
       }
       await db.write()
     }
 
-    return db.data.settings.theme.palette
+    return db.data.settings.theme.isColors
   }
 
-  // Update Theme Palette
-  async setThemePalette(palette: ThemePalette): Promise<ThemePalette> {
+  // Update Theme Colors
+  async setThemeIsColors(isColors: boolean): Promise<boolean> {
     const db = this.ensureDb()
     await db.read()
 
@@ -90,12 +90,12 @@ export class SettingsRepository extends BaseDatabaseService {
     if (!db.data.settings.theme) {
       db.data.settings.theme = {
         mode: 'system',
-        palette: 'mono'
+        isColors: true
       }
     }
 
-    db.data.settings.theme.palette = palette
+    db.data.settings.theme.isColors = isColors
     await db.write()
-    return palette
+    return isColors
   }
 }

@@ -50,7 +50,7 @@ const Nav = () => {
   const [view, setView] = useState<string>('')
   const location = useLocation()
 
-  const { palette } = useThemeStore()
+  const { isColors } = useThemeStore()
 
   useEffect(() => {
     const path = location.pathname.split('/')[1]
@@ -69,7 +69,7 @@ const Nav = () => {
           return (
             <NavItem
               key={item.to}
-              className={active && palette === 'colorful' ? `!${item.color}` : ''}
+              className={active && isColors ? `!${item.color}` : ''}
               to={item.to}
               active={active}
               onClick={() => setView(item.label.toLowerCase())}

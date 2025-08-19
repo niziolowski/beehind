@@ -1,23 +1,24 @@
-import { ThemeMode, ThemePalette } from '@main/types/database'
+import { ThemeMode } from '@main/types/database'
 import { create } from 'zustand'
 
 interface ThemeState {
   mode: ThemeMode | null
-  palette: ThemePalette | null
+  isColors: boolean | null
   initialize: () => void
   setMode: (mode: ThemeMode) => void
-  setPalette: (palette: ThemePalette) => void
+  setColors: (colors: boolean) => void
 }
 
 export const useThemeStore = create<ThemeState>()((set) => ({
   mode: null, // Default to null, will be initialized later
-  palette: null,
+  isColors: true,
+
   initialize: () => {
     window.api.theme.getThemeMode().then((mode) => {
       set((state) => ({ ...state, mode }))
     })
-    window.api.theme.getThemePalette().then((palette) => {
-      set((state) => ({ ...state, palette }))
+    window.api.theme.getThemeIsColors().then((isColors) => {
+      set((state) => ({ ...state, isColors }))
     })
   },
 
@@ -29,11 +30,11 @@ export const useThemeStore = create<ThemeState>()((set) => ({
     }))
   },
 
-  setPalette: (palette: ThemePalette) => {
-    window.api.theme.setThemePalette(palette)
+  setColors: (isColors: boolean) => {
+    window.api.theme.setThemeIsColors(isColors)
     return set((state: ThemeState) => ({
       ...state,
-      palette
+      isColors
     }))
   }
 }))
