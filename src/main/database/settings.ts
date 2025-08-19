@@ -30,6 +30,45 @@ export class SettingsRepository extends BaseDatabaseService {
     return decryptedToken
   }
 
+  // Get System Mode
+  async getSystemMode(): Promise<Omit<ThemeMode, 'system'> | null> {
+    const db = this.ensureDb()
+    await db.read()
+
+    if (!db.data.settings.theme) {
+      db.data.settings.theme = {
+        mode: 'system',
+        systemMode: null,
+        isColors: true
+      }
+      await db.write()
+    }
+
+    return db.data.settings.theme.systemMode
+  }
+
+  // Update System Mode
+  async setSystemMode(
+    mode: Omit<ThemeMode, 'system'> | null
+  ): Promise<Omit<ThemeMode, 'system'> | null> {
+    const db = this.ensureDb()
+    await db.read()
+
+    // Make sure the theme object exists before setting the mode
+    if (!db.data.settings.theme) {
+      db.data.settings.theme = {
+        mode: 'system',
+        systemMode: null,
+        isColors: true
+      }
+    }
+
+    db.data.settings.theme.systemMode = mode
+
+    await db.write()
+    return mode
+  }
+
   // Get Theme Mode
   async getThemeMode(): Promise<ThemeMode | null> {
     const db = this.ensureDb()
@@ -38,6 +77,7 @@ export class SettingsRepository extends BaseDatabaseService {
     if (!db.data.settings.theme) {
       db.data.settings.theme = {
         mode: 'system',
+        systemMode: null,
         isColors: true
       }
       await db.write()
@@ -55,6 +95,7 @@ export class SettingsRepository extends BaseDatabaseService {
     if (!db.data.settings.theme) {
       db.data.settings.theme = {
         mode: 'system',
+        systemMode: null,
         isColors: true
       }
     }
@@ -73,6 +114,7 @@ export class SettingsRepository extends BaseDatabaseService {
     if (!db.data.settings.theme) {
       db.data.settings.theme = {
         mode: 'system',
+        systemMode: null,
         isColors: true
       }
       await db.write()
@@ -90,6 +132,7 @@ export class SettingsRepository extends BaseDatabaseService {
     if (!db.data.settings.theme) {
       db.data.settings.theme = {
         mode: 'system',
+        systemMode: null,
         isColors: true
       }
     }

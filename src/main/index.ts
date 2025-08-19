@@ -1,8 +1,9 @@
-import { app, BrowserWindow, ipcMain } from 'electron'
+import { app, BrowserWindow, ipcMain, nativeTheme } from 'electron'
 import { electronApp, optimizer } from '@electron-toolkit/utils'
 import { createWindow } from './createWindow'
 import { memoryMonitor } from './memoryMonitor'
 import { initializeDatabaseSystem } from './database/database-handlers'
+import { databaseService } from './database'
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -28,6 +29,17 @@ app.whenReady().then(async () => {
 
   // Add memory monitoring
   memoryMonitor(mainWindow)
+
+  // Listen for system theme changes
+  nativeTheme.on('updated', () => {
+    const newTheme = nativeTheme.shouldUseDarkColors ? 'dark' : 'light'
+    databaseService.settings.setSystemMode(newTheme)
+
+    // Notify renderer process about theme change
+    if (mainWindow && !mainWindow.isDestroyed()) {
+      mainWindow.webContents.send('theme:systemChanged', newTheme)
+    }
+  })
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the

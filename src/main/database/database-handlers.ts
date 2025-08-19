@@ -66,6 +66,11 @@ export const setupSettingsHandlers = () => {
     return databaseService.settings.updateShopifyToken(token)
   })
 
+  // Get System Theme mode
+  ipcMain.handle('theme:getSystemMode', (): Promise<Omit<ThemeMode, 'system'> | null> => {
+    return databaseService.settings.getSystemMode()
+  })
+
   // Get Theme mode
   ipcMain.handle('theme:getMode', (): Promise<ThemeMode | null> => {
     return databaseService.settings.getThemeMode()

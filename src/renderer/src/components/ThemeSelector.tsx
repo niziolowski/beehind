@@ -9,7 +9,7 @@ interface ThemeCard {
 }
 
 const ThemeCard = ({ type, active, onClick }: ThemeCard): JSX.Element => {
-  const { mode } = useThemeStore()
+  const { systemMode } = useThemeStore()
 
   const colors = useMemo(() => {
     let sidebar: string = 'bg-primary',
@@ -23,17 +23,23 @@ const ThemeCard = ({ type, active, onClick }: ThemeCard): JSX.Element => {
       sidebar = 'bg-stone-700'
       background = 'bg-stone-500'
     }
-    if ((type === 'mono' && mode === 'light') || (type === 'colorful' && mode === 'light')) {
+    if (
+      (type === 'mono' && systemMode === 'light') ||
+      (type === 'colorful' && systemMode === 'light')
+    ) {
       sidebar = 'bg-stone-200'
       background = 'bg-stone-100'
     }
-    if ((type === 'mono' && mode === 'dark') || (type === 'colorful' && mode === 'dark')) {
+    if (
+      (type === 'mono' && systemMode === 'dark') ||
+      (type === 'colorful' && systemMode === 'dark')
+    ) {
       sidebar = 'bg-stone-700'
       background = 'bg-stone-500'
     }
 
     return { sidebar, background }
-  }, [type, mode])
+  }, [type, systemMode])
 
   const label = useMemo(() => {
     switch (type) {
@@ -57,14 +63,12 @@ const ThemeCard = ({ type, active, onClick }: ThemeCard): JSX.Element => {
 
     return (
       <div className="flex flex-col gap-1">
+        <div className={`h-1.5 rounded-full ${type === 'mono' ? 'bg-border' : 'bg-red-400'}`}></div>
         <div
-          className={`h-1.5 rounded-full ${type === 'mono' ? 'bg-background' : 'bg-red-400'}`}
+          className={`h-1.5 rounded-full ${type === 'mono' ? 'bg-border' : 'bg-yellow-400'}`}
         ></div>
         <div
-          className={`h-1.5 rounded-full ${type === 'mono' ? 'bg-background' : 'bg-yellow-400'}`}
-        ></div>
-        <div
-          className={`h-1.5 rounded-full ${type === 'mono' ? 'bg-background' : 'bg-lime-500'}`}
+          className={`h-1.5 rounded-full ${type === 'mono' ? 'bg-border' : 'bg-lime-500'}`}
         ></div>
       </div>
     )
@@ -77,7 +81,7 @@ const ThemeCard = ({ type, active, onClick }: ThemeCard): JSX.Element => {
         className={`relative flex-none w-30 h-20 rounded-xl overflow-hidden hover border  ${active ? ' border-border pointer-events-none opacity-70' : 'border-border'}`}
       >
         {active && (
-          <div className="absolute z-1 w-full h-full bg-background/50 flex items-center justify-center">
+          <div className="absolute z-1 w-full h-full bg-background/40 border-2 border-font rounded-xl flex items-center justify-center">
             <FaCheck />
           </div>
         )}
@@ -86,13 +90,13 @@ const ThemeCard = ({ type, active, onClick }: ThemeCard): JSX.Element => {
             <div className={`flex flex-col w-12 h-full p-2 gap-3 ${colors.sidebar}`}>
               <div className="flex gap-1">
                 <div
-                  className={`w-1.5 h-1.5 rounded-full ${type == 'mono' ? 'bg-background' : 'bg-red-400'}`}
+                  className={`w-1.5 h-1.5 rounded-full ${type == 'mono' ? 'bg-border' : 'bg-red-400'}`}
                 ></div>
                 <div
-                  className={`w-1.5 h-1.5 rounded-full ${type === 'mono' ? 'bg-background' : 'bg-yellow-400'}`}
+                  className={`w-1.5 h-1.5 rounded-full ${type === 'mono' ? 'bg-border' : 'bg-yellow-400'}`}
                 ></div>
                 <div
-                  className={`w-1.5 h-1.5 rounded-full ${type === 'mono' ? 'bg-background' : 'bg-lime-500'}`}
+                  className={`w-1.5 h-1.5 rounded-full ${type === 'mono' ? 'bg-border' : 'bg-lime-500'}`}
                 ></div>
               </div>
               {itemsSkeleton}
@@ -109,7 +113,9 @@ const ThemeCard = ({ type, active, onClick }: ThemeCard): JSX.Element => {
           )}
         </div>
       </button>
-      <div className={`${active ? 'opacity-50' : ''}`}>{label}</div>
+      <div className={`filter drop-shadow-md transition-all italic ${active ? 'font-bold' : ''}`}>
+        {label}
+      </div>
     </div>
   )
 }

@@ -6,10 +6,12 @@ interface ApiHandler {
     updateShopifyToken: (token: string) => Promise<string>
   }
   theme: {
+    getSystemMode: () => Promise<Omit<ThemeMode, 'system'> | null>
     getThemeMode: () => Promise<ThemeMode>
     setThemeMode: (mode: ThemeMode) => Promise<ThemeMode>
     getThemeIsColors: () => Promise<boolean>
     setThemeIsColors: (isColors: boolean) => Promise<boolean>
+    onSystemThemeChange: (callback: (theme: 'light' | 'dark') => void) => () => void
   }
 }
 

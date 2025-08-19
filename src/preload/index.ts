@@ -12,10 +12,20 @@ const apiHandler = {
       ipcRenderer.invoke('db:updateShopifyToken', token)
   },
   theme: {
+    getSystemMode: () => ipcRenderer.invoke('theme:getSystemMode'),
     getThemeMode: () => ipcRenderer.invoke('theme:getMode'),
     setThemeMode: (mode: ThemeMode) => ipcRenderer.invoke('theme:setMode', mode),
     getThemeIsColors: () => ipcRenderer.invoke('theme:getIsColors'),
-    setThemeIsColors: (isColors: boolean) => ipcRenderer.invoke('theme:setIsColors', isColors)
+    setThemeIsColors: (isColors: boolean) => ipcRenderer.invoke('theme:setIsColors', isColors),
+    onSystemThemeChange: (callback: (theme: 'light' | 'dark') => void) => {
+      const subscription = (_: any, theme: 'light' | 'dark') => callback(theme)
+      ipcRenderer.on('theme:systemChanged', subscription)
+
+      // Return unsubscribe function
+      return () => {
+        ipcRenderer.removeListener('theme:systemChanged', subscription)
+      }
+    }
   }
 }
 
