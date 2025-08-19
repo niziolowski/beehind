@@ -4,6 +4,7 @@ import Nav from './components/Nav'
 import Settings from './components/Settings'
 import { useThemeStore } from './stores/themeStore'
 import { useEffect } from 'react'
+import Home from './components/Home'
 
 function App() {
   // throw new Error('Test error')
@@ -18,14 +19,7 @@ function App() {
       <HashRouter>
         <Nav />
         <Routes>
-          <Route
-            path="/home"
-            element={
-              <>
-                <h1>Home</h1>
-              </>
-            }
-          />
+          <Route path="/home" element={<Home />} />
           <Route path="/settings" element={<Settings />} />
         </Routes>
       </HashRouter>

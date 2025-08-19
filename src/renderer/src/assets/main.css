@@ -15,6 +15,7 @@
   --color-blue: var(--color-blue);
   --color-violet: var(--color-violet);
   --color-brown: var(--color-brown);
+  --default-font-family: var(--font-serif);
 }
 
 .hover {
