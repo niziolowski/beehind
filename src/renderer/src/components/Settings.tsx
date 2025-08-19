@@ -13,7 +13,7 @@ const Settings = () => {
     const handler = async () => {
       try {
         const token = await window.api.database.getShopifyToken()
-        console.log(token)
+
         return setShopifyToken(token)
       } catch (error) {
         console.error(error)
