@@ -21,8 +21,8 @@ function NavItem({ children, to, className = '', active, onClick }: NavItemProps
     return color
   }, [systemMode, active])
 
-  const classes = `flex select-none items-center gap-2 cursor-pointer transition py-2 px-4 rounded-xl text-nowrap hover transition-all font-serif ${
-    active ? 'brightness-90' : ''
+  const classes = `flex select-none items-center gap-2 cursor-pointer transition py-2 px-4 rounded-xl text-nowrap hover:brightness-90 active:brightness-80 transition-all font-serif ${
+    active && !isColors ? 'brightness-80' : ''
   } ${fontColor} ${className}`
   return (
     <NavLink to={to} className={classes} onClick={onClick}>

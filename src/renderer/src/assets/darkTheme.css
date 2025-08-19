@@ -6,9 +6,9 @@
     --color-font: white;
     --color-font-light: #333;
     --color-home: #b33;
-    --color-orders: #37823a;
+    --color-orders: #519a2f;
     --color-products: #3a8eeb;
-    --color-components: #8a3ffc;
+    --color-components: #6448ff;
     --color-rules: #7b5b3a;
 
     color: var(--color-font);
