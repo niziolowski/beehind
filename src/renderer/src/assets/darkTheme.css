@@ -5,11 +5,11 @@
     --color-primary: #333;
     --color-font: white;
     --color-font-light: #333;
-    --color-red: #b33;
-    --color-green: #37823a;
-    --color-blue: #3a8eeb;
-    --color-violet: #8a3ffc;
-    --color-brown: #7b5b3a;
+    --color-home: #b33;
+    --color-orders: #37823a;
+    --color-products: #3a8eeb;
+    --color-components: #8a3ffc;
+    --color-rules: #7b5b3a;
 
     color: var(--color-font);
   }

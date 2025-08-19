@@ -10,7 +10,7 @@ interface NavItemProps {
 }
 
 function NavItem({ children, to, className = '', active, onClick }: NavItemProps) {
-  const classes = `flex items-center gap-2 cursor-pointer transition py-2 px-4 rounded-xl text-nowrap bg-primary hover transition-all font-serif ${
+  const classes = `flex items-center gap-2 cursor-pointer transition py-2 px-4 rounded-xl text-nowrap hover transition-all font-serif ${
     active ? 'brightness-90' : ''
   } ${className}`
   return (

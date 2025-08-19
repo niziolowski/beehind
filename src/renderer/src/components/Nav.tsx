@@ -1,7 +1,7 @@
 import { FiList, FiSettings, FiShoppingCart, FiSidebar } from 'react-icons/fi'
 import { FaHome, FaSitemap } from 'react-icons/fa'
 import NavItem from './NavItem'
-import { useEffect, useState, JSX } from 'react'
+import { useEffect, useState, JSX, useMemo } from 'react'
 
 import { NavLink, useLocation } from 'react-router-dom'
 import { useThemeStore } from '@renderer/stores/themeStore'
@@ -18,31 +18,31 @@ const navItems: NavItem[] = [
     to: '/home',
     icon: <FaHome />,
     label: 'Home',
-    color: 'bg-red'
+    color: 'bg-home'
   },
   {
     to: '/orders',
     icon: <FiSidebar />,
     label: 'Orders',
-    color: 'bg-violet'
+    color: 'bg-orders'
   },
   {
     to: '/products',
     icon: <FiShoppingCart />,
     label: 'Products',
-    color: 'bg-green'
+    color: 'bg-products'
   },
   {
     to: '/components',
     icon: <FiList />,
     label: 'Components',
-    color: 'bg-blue'
+    color: 'bg-components'
   },
   {
     to: '/rules',
     icon: <FaSitemap />,
     label: 'Rules',
-    color: 'bg-brown'
+    color: 'bg-rules'
   }
 ]
 
@@ -51,6 +51,25 @@ const Nav = () => {
   const location = useLocation()
 
   const { isColors } = useThemeStore()
+
+  const itemsJSX = useMemo(() => {
+    return navItems.map((item) => {
+      const active = view === item.label.toLowerCase()
+      const classes = `${active && isColors ? `${item.color} text-font-light` : 'bg-primary'}`
+      return (
+        <NavItem
+          key={item.to}
+          className={classes}
+          to={item.to}
+          active={active}
+          onClick={() => setView(item.label.toLowerCase())}
+        >
+          {item.icon}
+          {item.label}
+        </NavItem>
+      )
+    })
+  }, [navItems, view, setView])
 
   useEffect(() => {
     const path = location.pathname.split('/')[1]
@@ -62,24 +81,7 @@ const Nav = () => {
       <div className="font-bold flex justify-center items-center pb-2 font-serif text-2xl">
         BeeHind
       </div>
-      <div className="flex flex-col gap-2 p-2">
-        {navItems.map((item) => {
-          const active = view === item.label.toLowerCase()
-
-          return (
-            <NavItem
-              key={item.to}
-              className={active && isColors ? `!${item.color}` : ''}
-              to={item.to}
-              active={active}
-              onClick={() => setView(item.label.toLowerCase())}
-            >
-              {item.icon}
-              {item.label}
-            </NavItem>
-          )
-        })}
-      </div>
+      <div className="flex flex-col gap-2 p-2">{itemsJSX}</div>
 
       <div className="mt-auto border-t border-border">
         <NavLink
