@@ -78,14 +78,14 @@ const Nav = () => {
 
   return (
     <div className="h-screen bg-primary flex flex-col pt-10 border-r border-border">
-      <div className="font-bold flex justify-center items-center pb-2 font-serif text-2xl">
+      <div className="font-bold text-secondary flex justify-center items-center pb-2 font-serif text-2xl">
         BeeHind
       </div>
       <div className="flex flex-col gap-2 p-2">{itemsJSX}</div>
 
-      <div className="mt-auto border-t border-border">
+      <div className="mt-auto border-t border-border h-10">
         <NavLink
-          className={`flex justify-center items-center gap-2 hover:brightness-95 p-2 ${view === 'settings' ? 'text-font-light bg-font' : 'text-font bg-primary'}`}
+          className={`flex w-full h-full justify-center items-center gap-2 hover:bg-lime-400 ${view === 'settings' ? 'bg-primary' : 'text-font bg-primary'}`}
           to="/settings"
           onClick={() => setView('settings')}
         >

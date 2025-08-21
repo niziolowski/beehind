@@ -1,6 +1,6 @@
 const Home = () => {
   return (
-    <div className="p-10 flex flex-col gap-5">
+    <div className="p-10 flex flex-col gap-5 h-full ">
       <h1 className="text-home font-bold italic">Todo</h1>
       <div>
         <li>design settings panel (also add shop name)</li>

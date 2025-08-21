@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import ShopifyTokenSetting from './ShopifyTokenSetting'
+import ShopifyConfiguration from './ShopifyTokenSetting'
 import ThemeSelector from './ThemeSelector'
 
 const Settings = () => {
@@ -30,10 +30,10 @@ const Settings = () => {
   }, [shopifyToken])
 
   return (
-    <div className="bg-background w-full pt-10 flex flex-col gap-10">
+    <div className="bg-background w-full pt-10 flex flex-col gap-10 h-full">
       <div className="flex flex-col gap-5">
         <h1 className="px-10">Settings</h1>
-        <ShopifyTokenSetting />
+        <ShopifyConfiguration />
       </div>
       <div className="flex flex-col gap-5">
         <ThemeSelector />

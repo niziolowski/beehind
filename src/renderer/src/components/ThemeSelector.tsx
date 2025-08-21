@@ -119,7 +119,7 @@ const ThemeSelector = () => {
 
   return (
     <div className="flex flex-col px-10 gap-5">
-      <h1>Theme</h1>
+      <h2>Theme</h2>
       <div className="flex w-full flex-wrap h-full bg-background gap-5">
         <ThemeCard type="light" active={themeMode === 'light'} onClick={() => setMode('light')} />
         <ThemeCard type="dark" active={themeMode === 'dark'} onClick={() => setMode('dark')} />
@@ -129,7 +129,7 @@ const ThemeSelector = () => {
           onClick={() => setMode('system')}
         />
       </div>
-      <h1>Mood</h1>
+      <h2>Mood</h2>
       <div className="flex w-full flex-wrap h-full bg-background gap-5">
         <ThemeCard type="mono" active={isColors === false} onClick={() => setIsColors(false)} />
         <ThemeCard type="colorful" active={isColors === true} onClick={() => setIsColors(true)} />

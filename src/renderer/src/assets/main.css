@@ -8,9 +8,11 @@
   --color-background: var(--color-background);
   --color-border: var(--color-border);
   --color-primary: var(--color-primary);
+  --color-secondary: var(--color-secondary);
   --color-font: var(--color-font);
   --color-font-light: var(--color-font-light);
-  --default-font-family: var(--font-serif);
+  /* --default-font-family: var(--font-serif); */
+  --default-font-family: montserrat;
 
   /* PAGE SPECIFIC ACCENT COLORS */
   --color-home: var(--color-home);
@@ -25,7 +27,11 @@ body {
 }
 
 h1 {
-  @apply text-4xl font-serif;
+  @apply text-4xl;
+}
+
+h2 {
+  @apply text-2xl;
 }
 
 .hover {

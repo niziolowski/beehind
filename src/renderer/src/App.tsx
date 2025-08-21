@@ -4,6 +4,7 @@ import Nav from './components/Nav'
 import Settings from './components/Settings'
 import { useInitializeTheme } from './stores/themeStore'
 import Home from './components/Home'
+import StatusBar from './components/StatusBar'
 
 function App() {
   // throw new Error('Test error')
@@ -13,10 +14,13 @@ function App() {
     <div className="flex w-full">
       <HashRouter>
         <Nav />
-        <Routes>
-          <Route path="/home" element={<Home />} />
-          <Route path="/settings" element={<Settings />} />
-        </Routes>
+        <div className="flex flex-col w-full">
+          <Routes>
+            <Route path="/home" element={<Home />} />
+            <Route path="/settings" element={<Settings />} />
+          </Routes>
+          <StatusBar />
+        </div>
       </HashRouter>
 
       <ErrorModal />
