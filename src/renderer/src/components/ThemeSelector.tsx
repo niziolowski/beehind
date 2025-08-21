@@ -9,7 +9,7 @@ interface ThemeCard {
 }
 
 const ThemeCard = ({ type, active, onClick }: ThemeCard): JSX.Element => {
-  const { systemMode } = useThemeStore()
+  const { theme } = useThemeStore()
 
   const colors = useMemo(() => {
     let sidebar: string = 'bg-primary',
@@ -23,23 +23,17 @@ const ThemeCard = ({ type, active, onClick }: ThemeCard): JSX.Element => {
       sidebar = 'bg-stone-700'
       background = 'bg-stone-500'
     }
-    if (
-      (type === 'mono' && systemMode === 'light') ||
-      (type === 'colorful' && systemMode === 'light')
-    ) {
+    if ((type === 'mono' && theme === 'light') || (type === 'colorful' && theme === 'light')) {
       sidebar = 'bg-stone-200'
       background = 'bg-stone-100'
     }
-    if (
-      (type === 'mono' && systemMode === 'dark') ||
-      (type === 'colorful' && systemMode === 'dark')
-    ) {
+    if ((type === 'mono' && theme === 'dark') || (type === 'colorful' && theme === 'dark')) {
       sidebar = 'bg-stone-700'
       background = 'bg-stone-500'
     }
 
     return { sidebar, background }
-  }, [type, systemMode])
+  }, [type, theme])
 
   const label = useMemo(() => {
     switch (type) {
@@ -121,15 +115,19 @@ const ThemeCard = ({ type, active, onClick }: ThemeCard): JSX.Element => {
 }
 
 const ThemeSelector = () => {
-  const { mode, isColors, setMode, setIsColors } = useThemeStore()
+  const { themeMode, isColors, setMode, setIsColors } = useThemeStore()
 
   return (
     <div className="flex flex-col px-10 gap-5">
       <h1>Theme</h1>
       <div className="flex w-full flex-wrap h-full bg-background gap-5">
-        <ThemeCard type="light" active={mode === 'light'} onClick={() => setMode('light')} />
-        <ThemeCard type="dark" active={mode === 'dark'} onClick={() => setMode('dark')} />
-        <ThemeCard type="system" active={mode === 'system'} onClick={() => setMode('system')} />
+        <ThemeCard type="light" active={themeMode === 'light'} onClick={() => setMode('light')} />
+        <ThemeCard type="dark" active={themeMode === 'dark'} onClick={() => setMode('dark')} />
+        <ThemeCard
+          type="system"
+          active={themeMode === 'system'}
+          onClick={() => setMode('system')}
+        />
       </div>
       <h1>Mood</h1>
       <div className="flex w-full flex-wrap h-full bg-background gap-5">

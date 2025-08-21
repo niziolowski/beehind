@@ -25,7 +25,7 @@ body {
 }
 
 h1 {
-  @apply text-4xl font-medium text-font font-serif;
+  @apply text-4xl font-serif;
 }
 
 .hover {

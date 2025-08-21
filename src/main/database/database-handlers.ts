@@ -1,7 +1,7 @@
 import { ipcMain, dialog } from 'electron'
 import { promises as fs } from 'fs'
 import { databaseService } from './index'
-import { DatabaseSchema, ThemeMode } from '../types/database'
+import { DatabaseSchema, Theme, ThemeMode } from '../types/database'
 /**
  * Database IPC handlers
  * Handles all database-related communication between main and renderer processes
@@ -66,9 +66,14 @@ export const setupSettingsHandlers = () => {
     return databaseService.settings.updateShopifyToken(token)
   })
 
-  // Get System Theme mode
-  ipcMain.handle('theme:getSystemMode', (): Promise<Omit<ThemeMode, 'system'> | null> => {
-    return databaseService.settings.getSystemMode()
+  // Get Native Theme
+  ipcMain.handle('theme:getNativeTheme', (): Promise<Theme | null> => {
+    return databaseService.settings.getNativeTheme()
+  })
+
+  // Set Native Theme
+  ipcMain.handle('theme:setNativeTheme', (_, nativeTheme: Theme): Promise<Theme> => {
+    return databaseService.settings.setNativeTheme(nativeTheme)
   })
 
   // Get Theme mode

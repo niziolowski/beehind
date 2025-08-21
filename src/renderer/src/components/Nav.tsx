@@ -55,7 +55,7 @@ const Nav = () => {
   const itemsJSX = useMemo(() => {
     return navItems.map((item) => {
       const active = view === item.label.toLowerCase()
-      const classes = `${active && isColors ? `${item.color}` : 'bg-primary'}`
+      const classes = `${active && isColors ? `${item.color} shadow-sm` : 'bg-primary'}`
       return (
         <NavItem
           key={item.to}

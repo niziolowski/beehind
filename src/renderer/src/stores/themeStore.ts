@@ -1,11 +1,13 @@
 import { ThemeMode } from '@main/types/database'
-import { nativeTheme } from 'electron'
-import { create } from 'zustand'
 import { useEffect } from 'react'
+import { create } from 'zustand'
+
+type Theme = 'light' | 'dark'
 
 interface ThemeState {
-  mode: ThemeMode | null
-  systemMode: Omit<ThemeMode, 'system'> | null
+  theme: Theme | null
+  themeMode: ThemeMode | null
+  nativeTheme: Theme | null
   isColors: boolean | null
   initialize: () => void
   setMode: (mode: ThemeMode) => void
@@ -13,25 +15,45 @@ interface ThemeState {
 }
 
 export const useThemeStore = create<ThemeState>()((set) => ({
-  mode: null, // Default to null, will be initialized later
-  systemMode: null,
+  theme: null,
+  themeMode: null, // Default to null, will be initialized later
+  nativeTheme: null,
   isColors: true,
 
   initialize: () => {
-    window.api.theme.getThemeMode().then((mode) => {
-      set((state) => ({ ...state, mode }))
+    window.api.theme.getThemeMode().then((themeMode) => {
+      set((state) => ({ ...state, themeMode }))
     })
+
     window.api.theme.getThemeIsColors().then((isColors) => {
       set((state) => ({ ...state, isColors }))
     })
 
-    window.api.theme.getSystemMode().then((systemMode) => {
-      set((state) => ({ ...state, systemMode }))
+    window.api.theme.getNativeTheme().then((nativeTheme) => {
+      set((state) => ({ ...state, nativeTheme }))
     })
 
     // Subscribe to system theme changes
-    const unsubscribe = window.api.theme.onSystemThemeChange((newTheme) => {
-      set((state) => ({ ...state, systemMode: newTheme }))
+    const unsubscribe = window.api.theme.onSystemThemeChange((nativeTheme) => {
+      set((state: ThemeState) => {
+        const newState: ThemeState = {
+          ...state,
+          theme: state.themeMode === 'system' ? nativeTheme : state.themeMode,
+          nativeTheme
+        }
+
+        return newState
+      })
+    })
+
+    // Set initial theme value
+    set((state: ThemeState) => {
+      const newState: ThemeState = {
+        ...state,
+        theme: state.themeMode === 'system' ? state.nativeTheme : state.themeMode
+      }
+
+      return newState
     })
 
     // Return cleanup function (not used directly here but good practice)
@@ -40,12 +62,20 @@ export const useThemeStore = create<ThemeState>()((set) => ({
     }
   },
 
-  setMode: (mode: ThemeMode) => {
-    window.api.theme.setThemeMode(mode)
-    return set((state: ThemeState) => ({
-      ...state,
-      mode
-    }))
+  setMode: (themeMode: ThemeMode) => {
+    window.api.theme.setThemeMode(themeMode)
+
+    if (themeMode === 'system')
+      return set((state: ThemeState) => {
+        return { ...state, themeMode, theme: state.nativeTheme }
+      })
+    return set((state: ThemeState) => {
+      return {
+        ...state,
+        themeMode,
+        theme: themeMode
+      }
+    })
   },
 
   setIsColors: (isColors: boolean) => {

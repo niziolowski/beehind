@@ -44,8 +44,8 @@ export class BaseDatabaseService {
           settings: {
             shopifyToken: null,
             theme: {
-              mode: 'system',
-              systemMode: null,
+              nativeTheme: null,
+              themeMode: 'system',
               isColors: true
             }
           }

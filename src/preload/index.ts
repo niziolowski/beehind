@@ -1,6 +1,6 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
-import { ThemeMode } from '../main/types/database'
+import { Theme, ThemeMode } from '../main/types/database'
 
 // Custom APIs for renderer
 const apiHandler = {
@@ -12,7 +12,8 @@ const apiHandler = {
       ipcRenderer.invoke('db:updateShopifyToken', token)
   },
   theme: {
-    getSystemMode: () => ipcRenderer.invoke('theme:getSystemMode'),
+    getNativeTheme: () => ipcRenderer.invoke('theme:getNativeTheme'),
+    setNativeTheme: (nativeTheme: Theme) => ipcRenderer.invoke('theme:setNativeTheme', nativeTheme),
     getThemeMode: () => ipcRenderer.invoke('theme:getMode'),
     setThemeMode: (mode: ThemeMode) => ipcRenderer.invoke('theme:setMode', mode),
     getThemeIsColors: () => ipcRenderer.invoke('theme:getIsColors'),

@@ -4,6 +4,7 @@ import { createWindow } from './createWindow'
 import { memoryMonitor } from './memoryMonitor'
 import { initializeDatabaseSystem } from './database/database-handlers'
 import { databaseService } from './database'
+import { initializeTheme } from './theme'
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -24,6 +25,7 @@ app.whenReady().then(async () => {
 
   // Initialize Database
   await initializeDatabaseSystem()
+  await initializeTheme()
 
   const mainWindow = createWindow()
 
@@ -33,7 +35,6 @@ app.whenReady().then(async () => {
   // Listen for system theme changes
   nativeTheme.on('updated', () => {
     const newTheme = nativeTheme.shouldUseDarkColors ? 'dark' : 'light'
-    databaseService.settings.setSystemMode(newTheme)
 
     // Notify renderer process about theme change
     if (mainWindow && !mainWindow.isDestroyed()) {

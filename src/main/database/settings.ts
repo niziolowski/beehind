@@ -1,6 +1,6 @@
 import { nativeTheme, safeStorage } from 'electron'
 import { BaseDatabaseService } from './base'
-import { ThemeMode } from '../types/database'
+import { Theme, ThemeMode } from '../types/database'
 
 export class SettingsRepository extends BaseDatabaseService {
   // Update Shopify token
@@ -30,95 +30,47 @@ export class SettingsRepository extends BaseDatabaseService {
     return decryptedToken
   }
 
-  // Get System Mode
-  async getSystemMode(): Promise<Omit<ThemeMode, 'system'> | null> {
+  // Get Native Theme
+  async getNativeTheme(): Promise<Theme | null> {
     const db = this.ensureDb()
     await db.read()
 
-    if (!db.data.settings.theme) {
-      db.data.settings.theme = {
-        mode: 'system',
-        systemMode: null,
-        isColors: true
-      }
-      await db.write()
-    }
-
-    return db.data.settings.theme.systemMode
+    return db.data.settings.theme.nativeTheme
   }
 
-  // Update System Mode
-  async setSystemMode(
-    mode: Omit<ThemeMode, 'system'> | null
-  ): Promise<Omit<ThemeMode, 'system'> | null> {
+  // Set Native Theme
+  async setNativeTheme(nativeTheme: Theme): Promise<Theme> {
     const db = this.ensureDb()
     await db.read()
 
-    // Make sure the theme object exists before setting the mode
-    if (!db.data.settings.theme) {
-      db.data.settings.theme = {
-        mode: 'system',
-        systemMode: null,
-        isColors: true
-      }
-    }
-
-    db.data.settings.theme.systemMode = mode
-
+    db.data.settings.theme.nativeTheme = nativeTheme
     await db.write()
-    return mode
+    return nativeTheme
   }
 
   // Get Theme Mode
-  async getThemeMode(): Promise<ThemeMode | null> {
+  async getThemeMode(): Promise<ThemeMode> {
     const db = this.ensureDb()
     await db.read()
 
-    if (!db.data.settings.theme) {
-      db.data.settings.theme = {
-        mode: 'system',
-        systemMode: null,
-        isColors: true
-      }
-      await db.write()
-    }
-
-    return db.data.settings.theme.mode
+    return db.data.settings.theme.themeMode
   }
 
-  // Update Theme Mode
-  async setThemeMode(mode: ThemeMode): Promise<ThemeMode> {
+  // Set Theme Mode
+  async setThemeMode(themeMode: ThemeMode): Promise<ThemeMode> {
     const db = this.ensureDb()
     await db.read()
 
-    // Make sure the theme object exists before setting the mode
-    if (!db.data.settings.theme) {
-      db.data.settings.theme = {
-        mode: 'system',
-        systemMode: null,
-        isColors: true
-      }
-    }
-
-    db.data.settings.theme.mode = mode
-    nativeTheme.themeSource = mode as ThemeMode
+    db.data.settings.theme.themeMode = themeMode
+    nativeTheme.themeSource = themeMode
     await db.write()
-    return mode
+    return themeMode
   }
 
   // Get Theme Colors
   async getThemeIsColors(): Promise<boolean> {
     const db = this.ensureDb()
     await db.read()
-
-    if (!db.data.settings.theme) {
-      db.data.settings.theme = {
-        mode: 'system',
-        systemMode: null,
-        isColors: true
-      }
-      await db.write()
-    }
 
     return db.data.settings.theme.isColors
   }
@@ -127,15 +79,6 @@ export class SettingsRepository extends BaseDatabaseService {
   async setThemeIsColors(isColors: boolean): Promise<boolean> {
     const db = this.ensureDb()
     await db.read()
-
-    // Make sure the theme object exists before setting the mode
-    if (!db.data.settings.theme) {
-      db.data.settings.theme = {
-        mode: 'system',
-        systemMode: null,
-        isColors: true
-      }
-    }
 
     db.data.settings.theme.isColors = isColors
     await db.write()
