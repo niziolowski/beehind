@@ -1,9 +1,12 @@
 import { ElectronAPI } from '@electron-toolkit/preload'
+import { ShopifyCredentials } from '@main/types/database'
+import Shopify from 'shopify-api-node'
 
 interface ApiHandler {
-  database: {
-    getShopifyToken: () => Promise<string | null>
-    updateShopifyToken: (token: string) => Promise<string>
+  database: {}
+  shopify: {
+    getShopifyCredentials: () => Promise<ShopifyCredentials | null>
+    testShopifyConnection: (credentials: ShopifyCredentials) => Promise<ConnectionTestResult>
   }
   theme: {
     getNativeTheme: () => Promise<Theme | null>

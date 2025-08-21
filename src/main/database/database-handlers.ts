@@ -1,7 +1,8 @@
 import { ipcMain, dialog } from 'electron'
 import { promises as fs } from 'fs'
 import { databaseService } from './index'
-import { DatabaseSchema, Theme, ThemeMode } from '../types/database'
+import { DatabaseSchema, ShopifyCredentials, Theme, ThemeMode } from '../types/database'
+import { ConnectionTestResult } from './shopify'
 /**
  * Database IPC handlers
  * Handles all database-related communication between main and renderer processes
@@ -56,15 +57,18 @@ export const setupGeneralHandlers = () => {
 }
 
 export const setupSettingsHandlers = () => {
-  // Get Shopify token
-  ipcMain.handle('db:getShopifyToken', async (): Promise<string | null> => {
-    return databaseService.settings.getShopifyToken()
+  // Get Shopify credentials
+  ipcMain.handle('shopify:getCredentials', async (): Promise<ShopifyCredentials | null> => {
+    return databaseService.shopify.getShopifyCredentials()
   })
 
   // Update Shopify Token
-  ipcMain.handle('db:updateShopifyToken', async (_, token: string): Promise<string> => {
-    return databaseService.settings.updateShopifyToken(token)
-  })
+  ipcMain.handle(
+    'shopify:testConnection',
+    async (_, credentials: ShopifyCredentials): Promise<ConnectionTestResult> => {
+      return databaseService.shopify.testShopifyConnection(credentials)
+    }
+  )
 
   // Get Native Theme
   ipcMain.handle('theme:getNativeTheme', (): Promise<Theme | null> => {

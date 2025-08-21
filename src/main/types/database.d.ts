@@ -7,8 +7,13 @@ export type ThemeState = {
   isColors: boolean
 }
 
+export interface ShopifyCredentials {
+  shopName: string // e.g., 'your-shop-name' (without .myshopify.com)
+  accessToken: string // Shopify private/custom app access token
+}
+
 export interface Settings {
-  shopifyToken: string | null
+  shopifyCredentials?: ShopifyCredentials
   theme: ThemeState
 }
 

@@ -42,7 +42,6 @@ export class BaseDatabaseService {
       if (!this.db.data) {
         this.db.data = {
           settings: {
-            shopifyToken: null,
             theme: {
               nativeTheme: null,
               themeMode: 'system',

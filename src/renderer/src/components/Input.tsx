@@ -3,6 +3,10 @@ interface InputProps extends PropsWithChildren {
   className?: string
   icon?: JSX.Element
   placeholder?: string
+  value?: string
+  type?: string
+  autoComplete?: string
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(({ className, icon, ...rest }, ref) => {

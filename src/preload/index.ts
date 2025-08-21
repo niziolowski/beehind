@@ -1,15 +1,17 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
-import { Theme, ThemeMode } from '../main/types/database'
+import { ShopifyCredentials, Theme, ThemeMode } from '../main/types/database'
 
 // Custom APIs for renderer
 const apiHandler = {
   // Database API
   database: {
     // Settings operations
-    getShopifyToken: (): Promise<string> => ipcRenderer.invoke('db:getShopifyToken'),
-    updateShopifyToken: (token: string): Promise<string> =>
-      ipcRenderer.invoke('db:updateShopifyToken', token)
+  },
+  shopify: {
+    testShopifyConnection: (credentials: ShopifyCredentials) =>
+      ipcRenderer.invoke('shopify:testConnection', credentials),
+    getShopifyCredentials: () => ipcRenderer.invoke('shopify:getCredentials')
   },
   theme: {
     getNativeTheme: () => ipcRenderer.invoke('theme:getNativeTheme'),
