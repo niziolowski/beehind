@@ -3,11 +3,6 @@ import { BaseDatabaseService } from './base'
 import { safeStorage } from 'electron'
 import { ShopifyCredentials } from '../types/database'
 
-export interface ConnectionTestResult {
-  status: 'success' | 'failed' | 'offline'
-  message: string
-}
-
 export class ShopifyRepository extends BaseDatabaseService {
   // Get Shopify Credentials
   async getShopifyCredentials(): Promise<ShopifyCredentials | null> {
@@ -27,7 +22,7 @@ export class ShopifyRepository extends BaseDatabaseService {
     }
   }
 
-  async testShopifyConnection(credentials: ShopifyCredentials): Promise<ConnectionTestResult> {
+  async testShopifyConnection(credentials: ShopifyCredentials): Promise<Shopify.IShop> {
     try {
       // Initialize Shopify client with provided credentials
       const shopify = new Shopify({
@@ -38,6 +33,8 @@ export class ShopifyRepository extends BaseDatabaseService {
 
       // Test connection with a lightweight API call to fetch shop details
       const shop = await shopify.shop.get()
+
+      console.log(shop)
 
       const db = this.ensureDb()
       await db.read()
@@ -53,34 +50,19 @@ export class ShopifyRepository extends BaseDatabaseService {
       // Write changes to the database
       await db.write()
 
-      return {
-        status: 'success',
-        message: `Connected to Shopify store: ${shop.name} (${shop.email})`
-      }
+      return shop
     } catch (error: any) {
       // Handle specific Shopify API errors
       if (error.statusCode === 401) {
-        return {
-          status: 'failed',
-          message: 'Invalid credentials: Check your shop name or access token.'
-        }
+        throw new Error('Invalid credentials: Check your shop name or access token.')
       } else if (error.statusCode === 403) {
-        return {
-          status: 'failed',
-          message: 'Access denied: Ensure the access token has required permissions.'
-        }
+        throw new Error('Access denied: Ensure the access token has required permissions.')
       } else if (error.message.includes('ENOTFOUND') || error.message.includes('network')) {
         // Handle network issues for offline-first app
-        return {
-          status: 'offline',
-          message: 'No internet connection. Using cached data if available.'
-        }
+        throw new Error('No internet connection. Using cached data if available.')
       } else {
         // Generic error handling
-        return {
-          status: 'failed',
-          message: `Connection failed: ${error.message || 'Unknown error'}`
-        }
+        throw new Error(`Connection failed: ${error.message || 'Unknown error'}`)
       }
     }
   }

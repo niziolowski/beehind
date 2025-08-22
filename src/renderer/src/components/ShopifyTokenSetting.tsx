@@ -3,6 +3,8 @@ import Button from './Button'
 import Input from './Input'
 import { useEffect, useState } from 'react'
 import { useGetShopifyCredentials, useSetShopifyCredentials } from '@renderer/mutations'
+import LoadingSpinner from './LoadingSpinner'
+import { useErrorStore } from '@renderer/stores'
 
 const ShopifyConfiguration = () => {
   const [shopName, setShopName] = useState<string>('')
@@ -24,8 +26,6 @@ const ShopifyConfiguration = () => {
       setShopName(credentials.shopName)
       setAccessToken(credentials.accessToken)
     }
-
-    console.log(credentials)
   }, [credentials])
 
   return (
@@ -66,7 +66,7 @@ const ShopifyConfiguration = () => {
             {showAccessToken ? <FiEyeOff /> : <FiEye />}
           </button>
           <Button onClick={() => setShopifyCredentialsMutation({ shopName, accessToken })}>
-            {isPending ? 'Verifying...' : 'Verify'}
+            {isPending ? <LoadingSpinner /> : 'Verify'}
           </Button>
         </div>
       </div>
