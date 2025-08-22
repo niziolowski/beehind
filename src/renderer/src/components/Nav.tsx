@@ -69,12 +69,12 @@ const Nav = () => {
         </NavItem>
       )
     })
-  }, [navItems, view, setView])
+  }, [navItems, view, setView, isColors])
 
   useEffect(() => {
     const path = location.pathname.split('/')[1]
     setView(path || 'home')
-  }, [location.pathname])
+  }, [location.pathname, view])
 
   return (
     <div className="h-screen bg-primary flex flex-col pt-10 border-r border-border">

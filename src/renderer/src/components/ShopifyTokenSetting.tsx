@@ -4,8 +4,8 @@ import Input from './Input'
 import { useEffect, useState } from 'react'
 
 const ShopifyConfiguration = () => {
-  const [shopName, setShopName] = useState<string>()
-  const [accessToken, setAccessToken] = useState<string>()
+  const [shopName, setShopName] = useState<string>('')
+  const [accessToken, setAccessToken] = useState<string>('')
   const [showAccessToken, setShowAccessToken] = useState<boolean>(false)
   //TODO: Implement a real function
 

@@ -12,7 +12,6 @@ interface NavItemProps {
 
 function NavItem({ children, to, className = '', active, onClick }: NavItemProps) {
   const { theme, isColors } = useThemeStore()
-  // console.log(theme, isColors)
   const fontColor = useMemo(() => {
     let color = 'text-font'
     if (theme === 'light' && active && isColors) {
