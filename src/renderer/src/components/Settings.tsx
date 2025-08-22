@@ -3,7 +3,7 @@ import ThemeSelector from './ThemeSelector'
 
 const Settings = () => {
   return (
-    <div className="bg-background w-full pt-10 flex flex-col gap-10 h-full border mx-auto max-w-[800px]">
+    <div className="bg-background w-full pt-10 flex flex-col gap-10 h-full mx-auto max-w-[800px]">
       <div className="flex flex-col gap-5">
         <h1 className="px-10">Settings</h1>
         <ShopifyConfiguration />

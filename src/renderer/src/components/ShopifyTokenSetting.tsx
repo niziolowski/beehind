@@ -4,7 +4,6 @@ import Input from './Input'
 import { useEffect, useState } from 'react'
 import { useGetShopifyCredentials, useSetShopifyCredentials } from '@renderer/mutations'
 import LoadingSpinner from './LoadingSpinner'
-import { useErrorStore } from '@renderer/stores'
 
 const ShopifyConfiguration = () => {
   const [shopName, setShopName] = useState<string>('')
@@ -29,7 +28,7 @@ const ShopifyConfiguration = () => {
   }, [credentials])
 
   return (
-    <div className="px-10 flex flex-col gap-5 border">
+    <div className="px-10 flex flex-col gap-5">
       <h2>Shopify Configuration</h2>
       <div className="flex flex-col gap-2">
         <label className="flex pl-2 items-center gap-2">
@@ -39,7 +38,7 @@ const ShopifyConfiguration = () => {
           <Input
             value={shopName}
             onChange={handleShopNameChange}
-            className="max-w-96"
+            className="w-full max-w-[400px]"
             placeholder="store-name.myshopify.com"
             icon={<FiShoppingCart />}
           />
@@ -49,23 +48,26 @@ const ShopifyConfiguration = () => {
         <label className="flex pl-2 items-center gap-2">
           Shopify Token <FiInfo />
         </label>
-        <div className="flex items-center gap-3 border">
+        <div className="flex items-center gap-3 ">
           <Input
             value={accessToken}
             onChange={handleAccessTokenChange}
-            className="max-w-96 w-full"
+            className="flex-1 max-w-[400px]"
             type={showAccessToken ? 'text' : 'password'}
             autoComplete="new-password"
             placeholder="shpat_123456789..."
             icon={<FiKey />}
           />
           <button
-            className="text-sm text-secondary hover:text-primary"
+            className="relative text-sm -left-10 text-font"
             onClick={() => setShowAccessToken(!showAccessToken)}
           >
             {showAccessToken ? <FiEyeOff /> : <FiEye />}
           </button>
-          <Button onClick={() => setShopifyCredentialsMutation({ shopName, accessToken })}>
+          <Button
+            className=""
+            onClick={() => setShopifyCredentialsMutation({ shopName, accessToken })}
+          >
             {isPending ? <LoadingSpinner /> : 'Verify'}
           </Button>
         </div>

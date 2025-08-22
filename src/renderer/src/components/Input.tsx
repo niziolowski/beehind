@@ -10,9 +10,9 @@ interface InputProps extends PropsWithChildren {
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(({ className, icon, ...rest }, ref) => {
-  const classes = `flex w-full h-10 ${icon ? 'pl-9' : ''} px-3 py-2 text-sm text-font bg-primary border rounded-xl border-border ring-offset-background placeholder:text-secondary focus:border-neutral-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-400 disabled:cursor-not-allowed disabled:opacity-50 ${className}`
+  const classes = `w-full h-10 ${icon ? 'pl-9' : ''} px-3 py-2 text-sm text-font bg-primary border rounded-xl border-border ring-offset-background placeholder:text-secondary focus:border-neutral-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-400 disabled:cursor-not-allowed disabled:opacity-50`
   return (
-    <div className="flex items-center">
+    <div className={`flex items-center ${className}`}>
       {icon && <div className="absolute px-3 pointer-events-none">{icon}</div>}
       <input type="text" {...rest} className={classes} ref={ref} />
     </div>
