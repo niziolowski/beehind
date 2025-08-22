@@ -12,14 +12,14 @@ interface NavItemProps {
 
 function NavItem({ children, to, className = '', active, onClick }: NavItemProps) {
   const { theme, isColors } = useThemeStore()
-
+  // console.log(theme, isColors)
   const fontColor = useMemo(() => {
     let color = 'text-font'
     if (theme === 'light' && active && isColors) {
       color = 'text-font-light'
     }
     return color
-  }, [theme, active])
+  }, [theme, active, isColors])
 
   const classes = `flex select-none items-center gap-2 cursor-pointer transition-all py-2 px-4 rounded-xl text-nowrap hover:brightness-90 active:scale-95 active:brightness-80 transition-all font-serif ${
     active && !isColors ? 'brightness-80' : ''

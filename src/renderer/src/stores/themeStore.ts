@@ -1,98 +1,72 @@
-import { ThemeMode } from '@main/types/database'
-import { useEffect } from 'react'
+import { Theme, ThemeMode } from '@main/types/database'
 import { create } from 'zustand'
-
-type Theme = 'light' | 'dark'
 
 interface ThemeState {
   theme: Theme | null
   themeMode: ThemeMode | null
   nativeTheme: Theme | null
   isColors: boolean | null
-  initialize: () => void
-  setMode: (mode: ThemeMode) => void
+  setThemeMode: (mode: ThemeMode) => Promise<void>
   setIsColors: (colors: boolean) => void
 }
 
-export const useThemeStore = create<ThemeState>()((set) => ({
-  theme: null,
-  themeMode: null, // Default to null, will be initialized later
-  nativeTheme: null,
-  isColors: true,
-
-  initialize: () => {
-    window.api.theme.getThemeMode().then((themeMode) => {
-      set((state) => ({ ...state, themeMode }))
-    })
-
-    window.api.theme.getThemeIsColors().then((isColors) => {
-      set((state) => ({ ...state, isColors }))
-    })
-
-    window.api.theme.getNativeTheme().then((nativeTheme) => {
-      set((state) => ({ ...state, nativeTheme }))
-    })
-
-    // Subscribe to system theme changes
-    const unsubscribe = window.api.theme.onSystemThemeChange((nativeTheme) => {
-      set((state: ThemeState) => {
-        const newState: ThemeState = {
-          ...state,
-          theme: state.themeMode === 'system' ? nativeTheme : state.themeMode,
-          nativeTheme
-        }
-
-        return newState
-      })
-    })
-
-    // Set initial theme value
-    set((state: ThemeState) => {
-      const newState: ThemeState = {
-        ...state,
-        theme: state.themeMode === 'system' ? state.nativeTheme : state.themeMode
-      }
-
-      return newState
-    })
-
-    // Return cleanup function (not used directly here but good practice)
-    return () => {
-      unsubscribe()
-    }
-  },
-
-  setMode: (themeMode: ThemeMode) => {
-    window.api.theme.setThemeMode(themeMode)
-
-    if (themeMode === 'system')
-      return set((state: ThemeState) => {
-        return { ...state, themeMode, theme: state.nativeTheme }
-      })
-    return set((state: ThemeState) => {
-      return {
+// Create Zustand store with immediate initialization
+export const useThemeStore = create<ThemeState>((set) => {
+  // Initialize state
+  const state: ThemeState = {
+    theme: null,
+    themeMode: null,
+    nativeTheme: null,
+    isColors: true,
+    setThemeMode: async (themeMode: ThemeMode) => {
+      await window.api.theme.setThemeMode(themeMode)
+      set((state) => ({
         ...state,
         themeMode,
-        theme: themeMode
-      }
-    })
-  },
-
-  setIsColors: (isColors: boolean) => {
-    window.api.theme.setThemeIsColors(isColors)
-    return set((state: ThemeState) => ({
-      ...state,
-      isColors
-    }))
+        theme: themeMode === 'system' ? state.nativeTheme : themeMode
+      }))
+    },
+    setIsColors: (isColors: boolean) => {
+      window.api.theme.setThemeIsColors(isColors)
+      set({ isColors })
+    }
   }
-}))
 
-// Hook to initialize theme system (with cleanup because there are listeners)
+  // Immediately initialize the store
+  const initialize = async () => {
+    try {
+      // Fetch initial values
+      const themeMode = await window.api.theme.getThemeMode()
+      const isColors = await window.api.theme.getThemeIsColors()
+      const nativeTheme = await window.api.theme.getNativeTheme()
+
+      // Update state with initial values
+      set({
+        themeMode,
+        isColors,
+        nativeTheme,
+        theme: themeMode === 'system' ? nativeTheme : themeMode
+      })
+      // Subscribe to system theme changes
+      window.api.theme.onSystemThemeChange((newNativeTheme) => {
+        set((state) => ({
+          ...state,
+          nativeTheme: newNativeTheme,
+          theme: state.themeMode === 'system' ? newNativeTheme : state.themeMode
+        }))
+      })
+    } catch (error) {
+      throw new Error('Failed to initialize theme store')
+    }
+  }
+
+  // Call initialize immediately
+  initialize()
+
+  return state
+})
+
+// Optional hook for components to ensure store is used in React context
 export const useInitializeTheme = () => {
-  const { initialize } = useThemeStore()
-
-  useEffect(() => {
-    const cleanup = initialize()
-    return cleanup
-  }, [initialize])
+  return useThemeStore()
 }

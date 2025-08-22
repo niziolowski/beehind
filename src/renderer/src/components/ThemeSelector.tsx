@@ -115,7 +115,7 @@ const ThemeCard = ({ type, active, onClick }: ThemeCard): JSX.Element => {
 }
 
 const ThemeSelector = () => {
-  const { themeMode, isColors, setMode, setIsColors } = useThemeStore()
+  const { themeMode, isColors, setThemeMode: setMode, setIsColors } = useThemeStore()
 
   return (
     <div className="flex flex-col px-10 gap-5">
