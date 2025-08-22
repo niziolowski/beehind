@@ -2,12 +2,14 @@ import { FiEye, FiEyeOff, FiInfo, FiKey, FiShoppingCart } from 'react-icons/fi'
 import Button from './Button'
 import Input from './Input'
 import { useEffect, useState } from 'react'
+import { useGetShopifyCredentials, useSetShopifyCredentials } from '@renderer/mutations'
 
 const ShopifyConfiguration = () => {
   const [shopName, setShopName] = useState<string>('')
   const [accessToken, setAccessToken] = useState<string>('')
   const [showAccessToken, setShowAccessToken] = useState<boolean>(false)
-  //TODO: Implement a real function
+  const { data: credentials } = useGetShopifyCredentials()
+  const { mutate: setShopifyCredentialsMutation, isPending } = useSetShopifyCredentials()
 
   const handleShopNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setShopName(e.target.value)
@@ -18,32 +20,13 @@ const ShopifyConfiguration = () => {
   }
 
   useEffect(() => {
-    // Fetch existing Shopify credentials on mount
-    const fetchCredentials = async () => {
-      const credentials = await window.api.shopify.getShopifyCredentials()
-      if (credentials) {
-        setShopName(credentials.shopName)
-        setAccessToken(credentials.accessToken)
-      }
-      console.log('Fetched Shopify credentials:', credentials)
+    if (credentials) {
+      setShopName(credentials.shopName)
+      setAccessToken(credentials.accessToken)
     }
-    fetchCredentials()
-  }, [])
 
-  // function with validation
-  const validateInputs = () => {
-    if (!shopName || !accessToken) {
-      console.error('Shop name and access token are required')
-      return false
-    }
-    return true
-  }
-
-  const testShopifyConnection = async (shopName, accessToken) => {
-    if (!validateInputs()) return
-    await window.api.shopify.testShopifyConnection({ shopName, accessToken })
-    console.log('Shopify connection test initiated:', { shopName, accessToken })
-  }
+    console.log(credentials)
+  }, [credentials])
 
   return (
     <div className="px-10 flex flex-col gap-5 border">
@@ -82,7 +65,9 @@ const ShopifyConfiguration = () => {
           >
             {showAccessToken ? <FiEyeOff /> : <FiEye />}
           </button>
-          <Button onClick={() => testShopifyConnection(shopName, accessToken)}>Verify</Button>
+          <Button onClick={() => setShopifyCredentialsMutation({ shopName, accessToken })}>
+            {isPending ? 'Verifying...' : 'Verify'}
+          </Button>
         </div>
       </div>
     </div>
