@@ -1,35 +1,8 @@
-import { nativeTheme, safeStorage } from 'electron'
+import { nativeTheme } from 'electron'
 import { BaseDatabaseService } from './base'
 import { Theme, ThemeMode } from '../types/database'
 
 export class SettingsRepository extends BaseDatabaseService {
-  // // Update Shopify token
-  // async updateShopifyToken(token: string): Promise<string> {
-  //   const db = this.ensureDb()
-  //   await db.read()
-
-  //   const encryptedToken = safeStorage.encryptString(token)
-
-  //   db.data.settings.shopify.accessToken = encryptedToken.toString('base64')
-  //   await db.write()
-  //   return encryptedToken.toString('base64')
-  // }
-
-  // // Get Shopify token
-  // async getShopifyToken(): Promise<string | null> {
-  //   const db = this.ensureDb()
-  //   await db.read()
-
-  //   if (!db.data.settings.shopify.accessToken) return null
-
-  //   const encryptedToken = db.data.settings.shopify.accessToken
-
-  //   const buffer = Buffer.from(encryptedToken, 'base64')
-  //   const decryptedToken = safeStorage.decryptString(buffer)
-
-  //   return decryptedToken
-  // }
-
   // Get Native Theme
   async getNativeTheme(): Promise<Theme | null> {
     const db = this.ensureDb()

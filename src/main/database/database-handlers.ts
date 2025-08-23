@@ -2,7 +2,8 @@ import { ipcMain, dialog } from 'electron'
 import { promises as fs } from 'fs'
 import { databaseService } from './index'
 import { DatabaseSchema, ShopifyCredentials, Theme, ThemeMode } from '../types/database'
-import { ConnectionTestResult } from './shopify'
+import Shopify from 'shopify-api-node'
+
 /**
  * Database IPC handlers
  * Handles all database-related communication between main and renderer processes
@@ -65,7 +66,7 @@ export const setupSettingsHandlers = () => {
   // Update Shopify Token
   ipcMain.handle(
     'shopify:testConnection',
-    async (_, credentials: ShopifyCredentials): Promise<ConnectionTestResult> => {
+    async (_, credentials: ShopifyCredentials): Promise<Shopify.IShop> => {
       return databaseService.shopify.testShopifyConnection(credentials)
     }
   )

@@ -17,6 +17,7 @@ export const useThemeStore = create<ThemeState>((set) => ({
   nativeTheme: null,
   isColors: null,
   setThemeMode: (themeMode) => set({ themeMode }),
+
   setIsColors: (isColors) => set({ isColors }),
   initialize: async () => {
     try {
@@ -25,6 +26,7 @@ export const useThemeStore = create<ThemeState>((set) => ({
       const isColors = await window.api.theme.getThemeIsColors()
       const nativeTheme = await window.api.theme.getNativeTheme()
 
+      console.log(themeMode, isColors, nativeTheme)
       // Update state with initial values
       set({
         themeMode,
@@ -34,13 +36,16 @@ export const useThemeStore = create<ThemeState>((set) => ({
       })
 
       // Subscribe to system theme changes
-      window.api.theme.onSystemThemeChange((newNativeTheme) => {
+      window.api.theme.onSystemThemeChange(async (newNativeTheme) => {
         console.log('System theme changed:', newNativeTheme)
+        // Update state with new native theme
         set((state) => ({
           ...state,
           nativeTheme: newNativeTheme,
           theme: state.themeMode === 'system' ? newNativeTheme : state.themeMode
         }))
+        // Update database state
+        await window.api.theme.setNativeTheme(newNativeTheme)
       })
     } catch (error) {
       throw new Error('Failed to initialize theme store')

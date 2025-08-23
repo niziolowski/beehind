@@ -10,10 +10,11 @@ interface NavItemProps {
   onClick: () => void
 }
 
-function NavItem({ children, to, className = '', active, onClick }: NavItemProps) {
+function NavItem({ children, to, className, active, onClick }: NavItemProps) {
   const { theme, isColors } = useThemeStore()
   const fontColor = useMemo(() => {
     let color = 'text-font'
+
     if (theme === 'light' && active && isColors) {
       color = 'text-font-light'
     }
