@@ -4,6 +4,20 @@ import Input from './Input'
 import { useEffect, useState } from 'react'
 import { useGetShopifyCredentials, useSetShopifyCredentials } from '@renderer/mutations'
 import LoadingSpinner from './LoadingSpinner'
+import Modal from './Modal'
+import ButtonIcon from './ButtonIcon'
+
+const modalContents = {
+  shopName: {
+    title: 'Where can you find your store name?',
+    content: 'You can find your store name in your Shopify admin panel under Settings > General.'
+  },
+  accessToken: {
+    title: 'Where can you find your Shopify API access token?',
+    content:
+      'You can find your Shopify API access token in your Shopify admin panel under Apps > Manage private apps.'
+  }
+}
 
 const ShopifyConfiguration = () => {
   const [shopName, setShopName] = useState<string>('')
@@ -11,6 +25,8 @@ const ShopifyConfiguration = () => {
   const [showAccessToken, setShowAccessToken] = useState<boolean>(false)
   const { data: credentials } = useGetShopifyCredentials()
   const { mutate: setShopifyCredentialsMutation, isPending } = useSetShopifyCredentials()
+
+  const [modalContent, setModalContent] = useState<{ title: string; content: string } | null>(null)
 
   const handleShopNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setShopName(e.target.value)
@@ -28,51 +44,70 @@ const ShopifyConfiguration = () => {
   }, [credentials])
 
   return (
-    <div className="px-10 flex flex-col gap-5">
-      <h2>Shopify Configuration</h2>
-      <div className="flex flex-col gap-2">
-        <label className="flex pl-2 items-center gap-2">
-          Store name <FiInfo />
-        </label>
-        <div className="flex items-center gap-3">
-          <Input
-            value={shopName}
-            onChange={handleShopNameChange}
-            className="w-full max-w-[400px]"
-            placeholder="store-name.myshopify.com"
-            icon={<FiShoppingCart />}
-          />
+    <>
+      <div className="px-10 flex flex-col gap-5">
+        <h2>Shopify Configuration</h2>
+        <div className="flex flex-col gap-2">
+          <div className="flex pl-2 items-center gap-2">
+            <div>Store name</div>
+
+            <ButtonIcon onClick={() => setModalContent(modalContents.shopName)}>
+              <FiInfo />
+            </ButtonIcon>
+          </div>
+          <div className="flex items-center gap-3">
+            <Input
+              value={shopName}
+              onChange={handleShopNameChange}
+              className="w-full max-w-[400px]"
+              placeholder="store-name.myshopify.com"
+              icon={<FiShoppingCart />}
+            />
+          </div>
+        </div>
+        <div className="flex flex-col gap-2">
+          <div className="flex pl-2 items-center gap-2">
+            <div>Shopify Token</div>
+            <ButtonIcon onClick={() => setModalContent(modalContents.accessToken)}>
+              <FiInfo />
+            </ButtonIcon>
+          </div>
+          <div className="flex items-center gap-3 ">
+            <Input
+              value={accessToken}
+              onChange={handleAccessTokenChange}
+              className="flex-1 max-w-[400px]"
+              type={showAccessToken ? 'text' : 'password'}
+              autoComplete="new-password"
+              placeholder="shpat_123456789..."
+              icon={<FiKey />}
+            />
+            <button
+              className="relative text-sm -left-10 text-font"
+              onClick={() => setShowAccessToken(!showAccessToken)}
+            >
+              {showAccessToken ? <FiEyeOff /> : <FiEye />}
+            </button>
+            <Button
+              className=""
+              onClick={() => setShopifyCredentialsMutation({ shopName, accessToken })}
+            >
+              {isPending ? <LoadingSpinner /> : 'Verify'}
+            </Button>
+          </div>
         </div>
       </div>
-      <div className="flex flex-col gap-2">
-        <label className="flex pl-2 items-center gap-2">
-          Shopify Token <FiInfo />
-        </label>
-        <div className="flex items-center gap-3 ">
-          <Input
-            value={accessToken}
-            onChange={handleAccessTokenChange}
-            className="flex-1 max-w-[400px]"
-            type={showAccessToken ? 'text' : 'password'}
-            autoComplete="new-password"
-            placeholder="shpat_123456789..."
-            icon={<FiKey />}
-          />
-          <button
-            className="relative text-sm -left-10 text-font"
-            onClick={() => setShowAccessToken(!showAccessToken)}
-          >
-            {showAccessToken ? <FiEyeOff /> : <FiEye />}
-          </button>
-          <Button
-            className=""
-            onClick={() => setShopifyCredentialsMutation({ shopName, accessToken })}
-          >
-            {isPending ? <LoadingSpinner /> : 'Verify'}
-          </Button>
-        </div>
-      </div>
-    </div>
+
+      {modalContent && (
+        <Modal
+          active={modalContent !== null}
+          onClose={() => setModalContent(null)}
+          title={modalContent.title}
+        >
+          <p>{modalContent.content}</p>
+        </Modal>
+      )}
+    </>
   )
 }
 

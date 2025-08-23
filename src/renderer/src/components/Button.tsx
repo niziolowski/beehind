@@ -8,7 +8,7 @@ const Button = ({ onClick, children, className }: ButtonProps) => {
   return (
     <button
       onClick={onClick}
-      className={`bg-home text-font uppercase italic text-nowrap hover transition-all px-3 py-2 h-10 rounded-xl ${className}`}
+      className={`bg-home select-none cursor-pointer text-font uppercase italic text-nowrap hover transition-all px-3 py-2 h-10 rounded-xl ${className}`}
     >
       {children}
     </button>
