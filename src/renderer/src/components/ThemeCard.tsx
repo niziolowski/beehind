@@ -69,10 +69,10 @@ const ThemeCard = ({ type, active, onClick }: ThemeCard): JSX.Element => {
   }, [type])
 
   return (
-    <div className="flex flex-col items-center gap-1">
+    <div className="flex flex-col items-center gap-1 cursor-pointer select-none hover:brightness-90">
       <button
         onClick={onClick}
-        className={`relative flex-none w-30 h-20 rounded-xl overflow-hidden hover border  ${active ? ' border-border pointer-events-none opacity-70' : 'border-border'}`}
+        className={`relative cursor-pointer flex-none w-30 h-20 rounded-xl overflow-hidden border  ${active ? ' border-border pointer-events-none opacity-70' : 'border-border'}`}
       >
         {active && (
           <div className="absolute z-1 w-full h-full bg-background/40 border-2 border-font rounded-xl flex items-center justify-center">

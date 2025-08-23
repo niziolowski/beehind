@@ -47,10 +47,10 @@ const ShopifyConfiguration = () => {
     <>
       <div className="px-10 flex flex-col gap-5">
         <h2>Shopify Configuration</h2>
+
         <div className="flex flex-col gap-2">
           <div className="flex pl-2 items-center gap-2">
             <div>Store name</div>
-
             <ButtonIcon onClick={() => setModalContent(modalContents.shopName)}>
               <FiInfo />
             </ButtonIcon>
@@ -80,19 +80,21 @@ const ShopifyConfiguration = () => {
               type={showAccessToken ? 'text' : 'password'}
               autoComplete="new-password"
               placeholder="shpat_123456789..."
-              icon={<FiKey />}
+              icon={
+                <ButtonIcon
+                  className="relative text-sm text-font !p-0"
+                  onClick={() => setShowAccessToken(!showAccessToken)}
+                >
+                  {showAccessToken ? <FiEye /> : <FiEyeOff />}
+                </ButtonIcon>
+              }
             />
-            <button
-              className="relative text-sm -left-10 text-font"
-              onClick={() => setShowAccessToken(!showAccessToken)}
-            >
-              {showAccessToken ? <FiEyeOff /> : <FiEye />}
-            </button>
+
             <Button
-              className=""
+              loading={isPending}
               onClick={() => setShopifyCredentialsMutation({ shopName, accessToken })}
             >
-              {isPending ? <LoadingSpinner /> : 'Verify'}
+              Verify
             </Button>
           </div>
         </div>
