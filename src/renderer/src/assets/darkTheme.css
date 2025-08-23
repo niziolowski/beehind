@@ -3,13 +3,16 @@
     --color-background: #555;
     --color-border: #222;
     --color-primary: #333;
-    --color-font: rgb(225, 225, 225);
-    --color-font-light: #333;
+    --color-success: #aee04a;
+    --color-font: #fff;
+    --color-gray: #bfbfbf;
+    --color-font-inverted: #333;
     --color-home: #b33;
     --color-orders: #519a2f;
     --color-products: #3a8eeb;
     --color-components: #6448ff;
     --color-rules: #7b5b3a;
+    --color-btn: #d9d9d9;
 
     color: var(--color-font);
   }

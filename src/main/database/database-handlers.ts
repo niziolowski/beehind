@@ -1,4 +1,4 @@
-import { ipcMain, dialog } from 'electron'
+import { ipcMain, dialog, shell } from 'electron'
 import { promises as fs } from 'fs'
 import { databaseService } from './index'
 import { DatabaseSchema, ShopifyCredentials, Theme, ThemeMode } from '../types/database'
@@ -18,6 +18,14 @@ export const setupGeneralHandlers = () => {
   // Get database file path
   ipcMain.handle('db:getDatabasePath', async (): Promise<string> => {
     return databaseService.getDatabasePath()
+  })
+
+  // Open database location
+  ipcMain.handle('db:openDatabaseLocation', async (): Promise<void> => {
+    const dbPath = databaseService.getDatabasePath()
+    if (dbPath) {
+      shell.showItemInFolder(dbPath) // Show the given file in a file manager. If possible, select the file.
+    }
   })
 
   // Export database to file

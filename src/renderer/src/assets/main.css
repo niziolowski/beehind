@@ -9,8 +9,11 @@
   --color-border: var(--color-border);
   --color-primary: var(--color-primary);
   --color-secondary: var(--color-secondary);
+  --color-success: var(--color-success);
   --color-font: var(--color-font);
-  --color-font-light: var(--color-font-light);
+  --color-gray: var(--color-gray);
+  --color-font-inverted: var(--color-font-inverted);
+  --color-btn: var(--color-btn);
   --default-font-family: var(--font-serif);
   /* --default-font-family: montserrat; */
 

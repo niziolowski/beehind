@@ -28,7 +28,7 @@ const Modal = ({ active, title, onClose, children }: ModalProps) => {
   return createPortal(
     <div
       onClick={(e) => e.target == e.currentTarget && onClose()}
-      className="fixed inset-0 bg-background/50 backdrop-blur-xs flex items-center justify-center z-50"
+      className="fixed inset-0 bg-primary/50 backdrop-blur-xs flex items-center justify-center z-50"
     >
       <div className="bg-background p-8 rounded-lg max-w-md w-full shadow-lg">
         <h3 className="text-lg font-bold text-font">{title}</h3>

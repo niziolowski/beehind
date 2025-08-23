@@ -1,9 +1,8 @@
-import { FiEye, FiEyeOff, FiInfo, FiKey, FiShoppingCart } from 'react-icons/fi'
+import { FiCheck, FiEye, FiEyeOff, FiInfo, FiShoppingCart } from 'react-icons/fi'
 import Button from './Button'
 import Input from './Input'
 import { useEffect, useState } from 'react'
 import { useGetShopifyCredentials, useSetShopifyCredentials } from '@renderer/mutations'
-import LoadingSpinner from './LoadingSpinner'
 import Modal from './Modal'
 import ButtonIcon from './ButtonIcon'
 
@@ -24,7 +23,7 @@ const ShopifyConfiguration = () => {
   const [accessToken, setAccessToken] = useState<string>('')
   const [showAccessToken, setShowAccessToken] = useState<boolean>(false)
   const { data: credentials } = useGetShopifyCredentials()
-  const { mutate: setShopifyCredentialsMutation, isPending } = useSetShopifyCredentials()
+  const { mutate: setShopifyCredentialsMutation, isPending, isSuccess } = useSetShopifyCredentials()
 
   const [modalContent, setModalContent] = useState<{ title: string; content: string } | null>(null)
 
@@ -46,7 +45,9 @@ const ShopifyConfiguration = () => {
   return (
     <>
       <div className="px-10 flex flex-col gap-5">
-        <h2>Shopify Configuration</h2>
+        <h2 className="flex items-center gap-3">
+          Shopify Configuration {isSuccess && <FiCheck className="text-success" />}
+        </h2>
 
         <div className="flex flex-col gap-2">
           <div className="flex pl-2 items-center gap-2">
@@ -79,7 +80,7 @@ const ShopifyConfiguration = () => {
               className="flex-1 max-w-[400px]"
               type={showAccessToken ? 'text' : 'password'}
               autoComplete="new-password"
-              placeholder="shpat_123456789..."
+              placeholder="shpat_ab12cd34..."
               icon={
                 <ButtonIcon
                   className="relative text-sm text-font !p-0"

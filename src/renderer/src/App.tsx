@@ -6,14 +6,17 @@ import { useThemeStore } from './stores/themeStore'
 import Home from './components/Home'
 import StatusBar from './components/StatusBar'
 import { useEffect } from 'react'
+import { useSettingsStore } from './stores/settingsStore'
 
 function App() {
-  const { initialize: InitializeThemeStore } = useThemeStore()
+  const { initialize: initializeThemeStore } = useThemeStore()
+  const { initialize: initializeSettingsStore } = useSettingsStore()
   // throw new Error('Test error')
 
   useEffect(() => {
-    InitializeThemeStore()
-  }, [InitializeThemeStore])
+    initializeThemeStore()
+    initializeSettingsStore()
+  }, [initializeThemeStore])
 
   return (
     <div className="flex w-full">

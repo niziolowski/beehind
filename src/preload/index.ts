@@ -6,7 +6,8 @@ import { ShopifyCredentials, Theme, ThemeMode } from '../main/types/database'
 const apiHandler = {
   // Database API
   database: {
-    // Settings operations
+    getDatabasePath: () => ipcRenderer.invoke('db:getDatabasePath'),
+    openDatabaseLocation: () => ipcRenderer.invoke('db:openDatabaseLocation')
   },
   shopify: {
     testShopifyConnection: (credentials: ShopifyCredentials) =>

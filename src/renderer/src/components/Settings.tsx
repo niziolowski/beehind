@@ -2,7 +2,7 @@ import { useState } from 'react'
 import ShopifyConfiguration from './ShopifyTokenSetting'
 import ThemeSelector from './ThemeSelector'
 import DatabaseConfiguration from './DatabaseConfiguration'
-import TabBar, { Tab } from './Tabs'
+import TabBar, { Tab } from './TabBar'
 
 const tabs: Tab[] = [
   { id: 'shopify', label: 'Shopify' },
@@ -19,6 +19,7 @@ const Settings = () => {
         <h1 className="pr-5">Settings</h1>
         <TabBar tabs={tabs} value={activeTab} onChange={setActiveTab} />
       </div>
+
       {activeTab === 'shopify' && <ShopifyConfiguration />}
       {activeTab === 'database' && <DatabaseConfiguration />}
       {activeTab === 'theme' && <ThemeSelector />}

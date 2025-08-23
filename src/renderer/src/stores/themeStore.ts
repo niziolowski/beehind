@@ -26,7 +26,6 @@ export const useThemeStore = create<ThemeState>((set) => ({
       const isColors = await window.api.theme.getThemeIsColors()
       const nativeTheme = await window.api.theme.getNativeTheme()
 
-      console.log(themeMode, isColors, nativeTheme)
       // Update state with initial values
       set({
         themeMode,

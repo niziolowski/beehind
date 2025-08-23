@@ -3,10 +3,13 @@ import { ShopifyCredentials } from '@main/types/database'
 import Shopify from 'shopify-api-node'
 
 interface ApiHandler {
-  database: {}
+  database: {
+    getDatabasePath: () => Promise<string>
+    openDatabaseLocation: () => Promise<void>
+  }
   shopify: {
     getShopifyCredentials: () => Promise<ShopifyCredentials | null>
-    testShopifyConnection: (credentials: ShopifyCredentials) => Promise<ConnectionTestResult>
+    testShopifyConnection: (credentials: ShopifyCredentials) => Promise<Shopify.IShop>
   }
   theme: {
     getNativeTheme: () => Promise<Theme | null>

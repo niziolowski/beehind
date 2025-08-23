@@ -16,7 +16,7 @@ function NavItem({ children, to, className, active, onClick }: NavItemProps) {
     let color = 'text-font'
 
     if (theme === 'light' && active && isColors) {
-      color = 'text-font-light'
+      color = 'text-font-inverted'
     }
     return color
   }, [theme, active, isColors])
