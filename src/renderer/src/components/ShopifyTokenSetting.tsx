@@ -2,7 +2,11 @@ import { FiCheck, FiEye, FiEyeOff, FiInfo, FiShoppingCart } from 'react-icons/fi
 import Button from './Button'
 import Input from './Input'
 import { useEffect, useState } from 'react'
-import { useGetShopifyCredentials, useSetShopifyCredentials } from '@renderer/mutations'
+import {
+  useGetShopifyCredentials,
+  useSetShopifyCredentials,
+  useTestShopifyConnection
+} from '@renderer/mutations'
 import Modal from './Modal'
 import ButtonIcon from './ButtonIcon'
 
@@ -23,7 +27,12 @@ const ShopifyConfiguration = () => {
   const [accessToken, setAccessToken] = useState<string>('')
   const [showAccessToken, setShowAccessToken] = useState<boolean>(false)
   const { data: credentials } = useGetShopifyCredentials()
-  const { mutate: setShopifyCredentialsMutation, isPending, isSuccess } = useSetShopifyCredentials()
+  const { mutate: setShopifyCredentialsMutation } = useSetShopifyCredentials()
+  const {
+    mutate: testShopifyConnectionMutation,
+    isPending: isTestShopifyConnectionPending,
+    isSuccess: isTestShopifyConnectionSuccess
+  } = useTestShopifyConnection()
 
   const [modalContent, setModalContent] = useState<{ title: string; content: string } | null>(null)
 
@@ -35,10 +44,21 @@ const ShopifyConfiguration = () => {
     setAccessToken(e.target.value)
   }
 
+  const handleVerifyShopifyCredentials = async () => {
+    testShopifyConnectionMutation({ shopName, accessToken })
+    if (isTestShopifyConnectionSuccess) setShopifyCredentialsMutation({ shopName, accessToken })
+  }
+
   useEffect(() => {
     if (credentials) {
       setShopName(credentials.shopName)
       setAccessToken(credentials.accessToken)
+
+      //test shopify connection
+      testShopifyConnectionMutation({
+        shopName: credentials.shopName,
+        accessToken: credentials.accessToken
+      })
     }
   }, [credentials])
 
@@ -46,7 +66,8 @@ const ShopifyConfiguration = () => {
     <>
       <div className="px-10 flex flex-col gap-5">
         <h2 className="flex items-center gap-3">
-          Shopify Configuration {isSuccess && <FiCheck className="text-success" />}
+          Shopify Configuration{' '}
+          {isTestShopifyConnectionSuccess && <FiCheck className="text-success" />}
         </h2>
 
         <div className="flex flex-col gap-2">
@@ -92,8 +113,8 @@ const ShopifyConfiguration = () => {
             />
 
             <Button
-              loading={isPending}
-              onClick={() => setShopifyCredentialsMutation({ shopName, accessToken })}
+              loading={isTestShopifyConnectionPending}
+              onClick={handleVerifyShopifyCredentials}
             >
               Verify
             </Button>

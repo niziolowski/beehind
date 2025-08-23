@@ -9,6 +9,7 @@ interface ApiHandler {
   }
   shopify: {
     getShopifyCredentials: () => Promise<ShopifyCredentials | null>
+    setShopifyCredentials: (credentials: ShopifyCredentials) => Promise<ShopifyCredentials>
     testShopifyConnection: (credentials: ShopifyCredentials) => Promise<Shopify.IShop>
   }
   theme: {

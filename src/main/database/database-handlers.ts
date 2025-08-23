@@ -71,7 +71,15 @@ export const setupSettingsHandlers = () => {
     return databaseService.shopify.getShopifyCredentials()
   })
 
-  // Update Shopify Token
+  // Set Shopify credentials
+  ipcMain.handle(
+    'shopify:setCredentials',
+    async (_, credentials: ShopifyCredentials): Promise<ShopifyCredentials> => {
+      return databaseService.shopify.setShopifyCredentials(credentials)
+    }
+  )
+
+  // Test Shopify connection
   ipcMain.handle(
     'shopify:testConnection',
     async (_, credentials: ShopifyCredentials): Promise<Shopify.IShop> => {

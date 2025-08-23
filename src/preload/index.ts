@@ -12,7 +12,9 @@ const apiHandler = {
   shopify: {
     testShopifyConnection: (credentials: ShopifyCredentials) =>
       ipcRenderer.invoke('shopify:testConnection', credentials),
-    getShopifyCredentials: () => ipcRenderer.invoke('shopify:getCredentials')
+    getShopifyCredentials: () => ipcRenderer.invoke('shopify:getCredentials'),
+    setShopifyCredentials: (credentials: ShopifyCredentials) =>
+      ipcRenderer.invoke('shopify:setCredentials', credentials)
   },
   theme: {
     getNativeTheme: () => ipcRenderer.invoke('theme:getNativeTheme'),

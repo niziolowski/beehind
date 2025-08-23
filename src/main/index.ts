@@ -3,7 +3,6 @@ import { electronApp, optimizer } from '@electron-toolkit/utils'
 import { createWindow } from './createWindow'
 import { memoryMonitor } from './memoryMonitor'
 import { initializeDatabaseSystem } from './database/database-handlers'
-import { databaseService } from './database'
 import { initializeTheme } from './theme'
 
 // This method will be called when Electron has finished
