@@ -1,14 +1,14 @@
 import { BaseDatabaseService } from './base'
-import { SettingsRepository } from './settings'
+import { ThemeRepository } from './theme'
 import { ShopifyRepository } from './shopify'
 
 export class DatabaseService extends BaseDatabaseService {
-  private settingsRepo: SettingsRepository
+  private themeRepo: ThemeRepository
   private shopifyRepo: ShopifyRepository
 
   constructor() {
     super()
-    this.settingsRepo = new SettingsRepository()
+    this.themeRepo = new ThemeRepository()
     this.shopifyRepo = new ShopifyRepository()
   }
 
@@ -17,9 +17,9 @@ export class DatabaseService extends BaseDatabaseService {
     await super.initialize()
 
     // Share the database connection with all repositories
-    this.settingsRepo.db = this.db
-    this.settingsRepo.Low = this.Low
-    this.settingsRepo.JSONFile = this.JSONFile
+    this.themeRepo.db = this.db
+    this.themeRepo.Low = this.Low
+    this.themeRepo.JSONFile = this.JSONFile
 
     this.shopifyRepo.db = this.db
     this.shopifyRepo.Low = this.Low
@@ -27,8 +27,8 @@ export class DatabaseService extends BaseDatabaseService {
   }
 
   // Expose repository instances
-  get settings(): SettingsRepository {
-    return this.settingsRepo
+  get theme(): ThemeRepository {
+    return this.themeRepo
   }
 
   get shopify(): ShopifyRepository {
@@ -41,5 +41,5 @@ export const databaseService = new DatabaseService()
 
 // Export everything else
 export { BaseDatabaseService } from './base'
-export { SettingsRepository } from './settings'
+export { ThemeRepository } from './theme'
 export { ShopifyRepository } from './shopify'

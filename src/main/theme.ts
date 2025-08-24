@@ -6,9 +6,9 @@ export const initializeTheme = async () => {
     //TODO: move to initializeTheme (in index)
     // Set initial nativeTheme value
     const theme = nativeTheme.shouldUseDarkColors ? 'dark' : 'light'
-    databaseService.settings.setNativeTheme(theme)
+    databaseService.theme.setNativeTheme(theme)
     // Set initial theme source
-    nativeTheme.themeSource = await databaseService.settings.getThemeMode()
+    nativeTheme.themeSource = await databaseService.theme.getThemeMode()
   } catch (error) {
     console.error('Failed to initialize theme:', error)
   }

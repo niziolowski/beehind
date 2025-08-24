@@ -1,6 +1,7 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 import { ShopifyCredentials, Theme, ThemeMode } from '../main/types/database'
+import Shopify from 'shopify-api-node'
 
 // Custom APIs for renderer
 const apiHandler = {
@@ -12,10 +13,11 @@ const apiHandler = {
     importFromFile: () => ipcRenderer.invoke('db:importFromFile')
   },
   shopify: {
-    testShopifyConnection: (credentials: ShopifyCredentials) =>
+    testShopifyConnection: (credentials: ShopifyCredentials): Promise<Shopify.IShop> =>
       ipcRenderer.invoke('shopify:testConnection', credentials),
-    getShopifyCredentials: () => ipcRenderer.invoke('shopify:getCredentials'),
-    setShopifyCredentials: (credentials: ShopifyCredentials) =>
+    getShopifyCredentials: (): Promise<ShopifyCredentials> | null =>
+      ipcRenderer.invoke('shopify:getCredentials'),
+    setShopifyCredentials: (credentials: ShopifyCredentials): Promise<ShopifyCredentials> =>
       ipcRenderer.invoke('shopify:setCredentials', credentials)
   },
   theme: {

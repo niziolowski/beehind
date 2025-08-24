@@ -87,7 +87,7 @@ export const setupGeneralHandlers = () => {
   })
 }
 
-export const setupSettingsHandlers = () => {
+export const setupShopifyHandlers = () => {
   // Get Shopify credentials
   ipcMain.handle('shopify:getCredentials', async (): Promise<ShopifyCredentials | null> => {
     return databaseService.shopify.getShopifyCredentials()
@@ -108,35 +108,37 @@ export const setupSettingsHandlers = () => {
       return databaseService.shopify.testShopifyConnection(credentials)
     }
   )
+}
 
+export const setupThemeHandlers = () => {
   // Get Native Theme
   ipcMain.handle('theme:getNativeTheme', (): Promise<Theme | null> => {
-    return databaseService.settings.getNativeTheme()
+    return databaseService.theme.getNativeTheme()
   })
 
   // Set Native Theme
   ipcMain.handle('theme:setNativeTheme', (_, nativeTheme: Theme): Promise<Theme> => {
-    return databaseService.settings.setNativeTheme(nativeTheme)
+    return databaseService.theme.setNativeTheme(nativeTheme)
   })
 
   // Get Theme mode
   ipcMain.handle('theme:getMode', (): Promise<ThemeMode | null> => {
-    return databaseService.settings.getThemeMode()
+    return databaseService.theme.getThemeMode()
   })
 
   // Set Theme mode
   ipcMain.handle('theme:setMode', (_, mode: ThemeMode): Promise<ThemeMode> => {
-    return databaseService.settings.setThemeMode(mode)
+    return databaseService.theme.setThemeMode(mode)
   })
 
   // Get Theme colors
   ipcMain.handle('theme:getIsColors', (): Promise<boolean | null> => {
-    return databaseService.settings.getThemeIsColors()
+    return databaseService.theme.getThemeIsColors()
   })
 
   // Set Theme colors
   ipcMain.handle('theme:setIsColors', (_, isColors: boolean): Promise<boolean> => {
-    return databaseService.settings.setThemeIsColors(isColors)
+    return databaseService.theme.setThemeIsColors(isColors)
   })
 }
 /**
@@ -146,7 +148,8 @@ export const initializeDatabaseSystem = async (): Promise<void> => {
   try {
     await databaseService.initialize()
     setupGeneralHandlers()
-    setupSettingsHandlers()
+    setupShopifyHandlers()
+    setupThemeHandlers()
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Failed to initialize database system:', error)

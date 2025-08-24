@@ -13,7 +13,8 @@ import ButtonIcon from './ButtonIcon'
 const modalContents = {
   shopName: {
     title: 'Where can you find your store name?',
-    content: 'You can find your store name in your Shopify admin panel under Settings > General.'
+    content:
+      '(without .myshopify.com) You can find your store name in your Shopify admin panel under Settings > General.'
   },
   accessToken: {
     title: 'Where can you find your Shopify API access token?',
@@ -27,9 +28,9 @@ const ShopifyConfiguration = () => {
   const [accessToken, setAccessToken] = useState<string>('')
   const [showAccessToken, setShowAccessToken] = useState<boolean>(false)
   const { data: credentials } = useGetShopifyCredentials()
-  const { mutate: setShopifyCredentialsMutation } = useSetShopifyCredentials()
+  const { mutateAsync: setShopifyCredentialsMutation } = useSetShopifyCredentials()
   const {
-    mutate: testShopifyConnectionMutation,
+    mutateAsync: testShopifyConnectionMutation,
     isPending: isTestShopifyConnectionPending,
     isSuccess: isTestShopifyConnectionSuccess
   } = useTestShopifyConnection()
@@ -45,8 +46,12 @@ const ShopifyConfiguration = () => {
   }
 
   const handleVerifyShopifyCredentials = async () => {
-    testShopifyConnectionMutation({ shopName, accessToken })
-    if (isTestShopifyConnectionSuccess) setShopifyCredentialsMutation({ shopName, accessToken })
+    try {
+      const shop = await testShopifyConnectionMutation({ shopName, accessToken })
+      if (shop) await setShopifyCredentialsMutation({ shopName, accessToken })
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   useEffect(() => {
@@ -82,7 +87,7 @@ const ShopifyConfiguration = () => {
               value={shopName}
               onChange={handleShopNameChange}
               className="w-full max-w-[400px]"
-              placeholder="store-name.myshopify.com"
+              placeholder="store-name"
               icon={<FiShoppingCart />}
             />
           </div>

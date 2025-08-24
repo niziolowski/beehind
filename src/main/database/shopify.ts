@@ -25,6 +25,7 @@ export class ShopifyRepository extends BaseDatabaseService {
   // Test Shopify connection
   async testShopifyConnection(credentials: ShopifyCredentials): Promise<Shopify.IShop> {
     try {
+      console.log('testing')
       // Initialize Shopify client with provided credentials
       const shopify = new Shopify({
         shopName: credentials.shopName,

@@ -2,7 +2,7 @@ import { nativeTheme } from 'electron'
 import { BaseDatabaseService } from './base'
 import { Theme, ThemeMode } from '../types/database'
 
-export class SettingsRepository extends BaseDatabaseService {
+export class ThemeRepository extends BaseDatabaseService {
   // Get Native Theme
   async getNativeTheme(): Promise<Theme | null> {
     const db = this.ensureDb()

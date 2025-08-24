@@ -97,19 +97,6 @@ export class BaseDatabaseService {
   }
 
   // Common database operations
-  // async backup(): Promise<string> {
-  //   const db = this.ensureDb()
-  //   await db.read()
-
-  //   const backupPath = path.join(path.dirname(this.dbPath), `backup-${Date.now()}.json`)
-
-  //   await this.loadLowDB()
-  //   const backupAdapter = new this.JSONFile(backupPath)
-  //   const backupDb = new this.Low(backupAdapter, db.data)
-  //   await backupDb.write()
-
-  //   return backupPath
-  // }
 
   async exportData(): Promise<DatabaseSchema> {
     const db = this.ensureDb()
@@ -121,7 +108,6 @@ export class BaseDatabaseService {
     const db = this.ensureDb()
 
     // Ensure all required collections exist in the imported data
-    console.log('Importing data:', data)
     const normalizedData: DatabaseSchema = {
       settings: {
         theme: {
