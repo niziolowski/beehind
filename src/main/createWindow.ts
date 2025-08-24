@@ -56,10 +56,18 @@ export function createWindow(): BrowserWindow {
     } else {
       mainWindow.show()
     }
+
+    // Notify renderer process about theme change
+    const newTheme = nativeTheme.shouldUseDarkColors ? 'dark' : 'light'
+    console.log('System theme changed:', newTheme)
+    if (mainWindow && !mainWindow.isDestroyed()) {
+      mainWindow.webContents.send('theme:systemChanged', newTheme)
+    }
   })
 
   // Save window state when moved or resized
   mainWindow.on('resize', () => {
+    console.log('Window resized:')
     if (mainWindow && !mainWindow.isDestroyed()) {
       saveWindowState(mainWindow, windowState)
     }
@@ -88,15 +96,6 @@ export function createWindow(): BrowserWindow {
 
   mainWindow.on('closed', () => {
     mainWindow = null
-  })
-
-  mainWindow.on('ready-to-show', () => {
-    const newTheme = nativeTheme.shouldUseDarkColors ? 'dark' : 'light'
-    console.log('System theme changed:', newTheme)
-    // Notify renderer process about theme change
-    if (mainWindow && !mainWindow.isDestroyed()) {
-      mainWindow.webContents.send('theme:systemChanged', newTheme)
-    }
   })
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
