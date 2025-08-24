@@ -10,11 +10,6 @@ import Shopify from 'shopify-api-node'
  */
 
 export const setupGeneralHandlers = () => {
-  // Backup database
-  ipcMain.handle('db:backup', async (): Promise<string> => {
-    return databaseService.backup()
-  })
-
   // Get database file path
   ipcMain.handle('db:getDatabasePath', async (): Promise<string> => {
     return databaseService.getDatabasePath()
@@ -35,7 +30,7 @@ export const setupGeneralHandlers = () => {
       try {
         const result = await dialog.showSaveDialog({
           title: 'Export Database',
-          defaultPath: `magazyn-shof-export-${new Date().toISOString().split('T')[0]}.json`,
+          defaultPath: `beehind-database-export-${new Date().toISOString().split('T')[0]}.json`,
           filters: [
             { name: 'JSON Files', extensions: ['json'] },
             { name: 'All Files', extensions: ['*'] }
@@ -59,9 +54,35 @@ export const setupGeneralHandlers = () => {
     }
   )
 
-  // Get database export data (for preview)
-  ipcMain.handle('db:getExportData', async (): Promise<DatabaseSchema> => {
-    return databaseService.exportData()
+  // Import database from file
+  ipcMain.handle('db:importFromFile', async (): Promise<void> => {
+    try {
+      const result = await dialog.showOpenDialog({
+        title: 'Import Database',
+        properties: ['openFile'],
+        filters: [
+          { name: 'JSON Files', extensions: ['json'] },
+          { name: 'All Files', extensions: ['*'] }
+        ]
+      })
+
+      if (result.canceled || result.filePaths.length === 0) {
+        throw new Error('Import cancelled')
+      }
+
+      const filePath = result.filePaths[0]
+      const fileContent = await fs.readFile(filePath, 'utf8')
+      const data: DatabaseSchema = JSON.parse(fileContent)
+
+      // Basic validation of imported data
+      if (!data || typeof data !== 'object' || !data.settings) {
+        throw new Error('Invalid database format')
+      }
+
+      await databaseService.importData(data)
+    } catch (error) {
+      throw new Error(error instanceof Error ? error.message : 'Unknown error')
+    }
   })
 }
 

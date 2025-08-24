@@ -32,9 +32,9 @@ const Modal = ({ active, title, onClose, children }: ModalProps) => {
     >
       <div className="bg-background p-8 rounded-lg max-w-md w-full shadow-lg">
         <h3 className="text-lg font-bold text-font">{title}</h3>
-        <div className="mt-4 flex flex-col gap-10 items-end">
+        <div className="mt-4 flex flex-col gap-10 ">
           {children}
-          <Button className="w-20" onClick={onClose}>
+          <Button className="w-20 self-end" onClick={onClose}>
             OK
           </Button>
         </div>

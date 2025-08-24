@@ -6,6 +6,8 @@ interface ApiHandler {
   database: {
     getDatabasePath: () => Promise<string>
     openDatabaseLocation: () => Promise<void>
+    exportToFile: () => Promise<{ success: boolean; path?: string; error?: string }>
+    importFromFile: () => Promise<{ success: boolean; error?: string }>
   }
   shopify: {
     getShopifyCredentials: () => Promise<ShopifyCredentials | null>

@@ -7,7 +7,9 @@ const apiHandler = {
   // Database API
   database: {
     getDatabasePath: () => ipcRenderer.invoke('db:getDatabasePath'),
-    openDatabaseLocation: () => ipcRenderer.invoke('db:openDatabaseLocation')
+    openDatabaseLocation: () => ipcRenderer.invoke('db:openDatabaseLocation'),
+    exportToFile: () => ipcRenderer.invoke('db:exportToFile'),
+    importFromFile: () => ipcRenderer.invoke('db:importFromFile')
   },
   shopify: {
     testShopifyConnection: (credentials: ShopifyCredentials) =>
