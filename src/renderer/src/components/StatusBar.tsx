@@ -2,7 +2,7 @@ import { FiActivity, FiAlertTriangle, FiDownload } from 'react-icons/fi'
 
 const StatusBar = () => {
   return (
-    <div className="flex flex-wrap items-center w-full h-10 p-1 flex-none bg-background border-t border-border text-sm">
+    <div className="flex flex-wrap items-center w-full h-10 p-1 flex-none bg-background border-t border-border text-sm overflow-hidden">
       <button className="rounded-xl px-5 h-full flex items-center gap-2 text-secondary italic hover:bg-lime-300 hover:text-font">
         <FiDownload />
         <div>Sync</div>

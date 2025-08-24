@@ -66,7 +66,6 @@ export function createWindow(): BrowserWindow {
 
   // Save window state when moved or resized
   mainWindow.on('resize', () => {
-    console.log('Window resized:')
     if (mainWindow && !mainWindow.isDestroyed()) {
       saveWindowState(mainWindow, windowState)
     }

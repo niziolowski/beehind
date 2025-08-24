@@ -22,7 +22,7 @@ function App() {
     <div className="flex w-full">
       <HashRouter>
         <Nav />
-        <div className="flex flex-col w-full">
+        <div className="relative flex flex-col w-full h-screen">
           <Routes>
             <Route path="/home" element={<Home />} />
             <Route path="/settings" element={<Settings />} />

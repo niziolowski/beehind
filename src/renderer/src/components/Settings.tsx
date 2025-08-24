@@ -14,7 +14,7 @@ const Settings = () => {
   const [activeTab, setActiveTab] = useState<'shopify' | 'database' | 'theme'>('shopify')
 
   return (
-    <div className="bg-background w-full pt-10 flex flex-col gap-10 h-full mx-auto max-w-[800px]">
+    <div className="bg-background w-full pt-10 flex flex-col gap-10 min-h-0 h-full mx-auto max-w-[800px] overflow-y-scroll">
       <div className="px-10 flex flex-wrap gap-5">
         <h1 className="pr-5">Settings</h1>
         <TabBar tabs={tabs} value={activeTab} onChange={setActiveTab} />

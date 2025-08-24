@@ -1,6 +1,6 @@
 const Home = () => {
   return (
-    <div className="p-10 flex flex-col gap-5 h-full ">
+    <div className="p-10 flex flex-col gap-5 h-full overflow-y-scroll">
       <h1 className="text-home font-bold italic">Todo</h1>
       <div>
         <li>

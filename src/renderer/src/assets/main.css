@@ -25,7 +25,8 @@
   --color-rules: var(--color-rules);
 }
 
-body {
+body,
+html {
   @apply bg-background;
 }
 
