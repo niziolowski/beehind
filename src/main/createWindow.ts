@@ -43,6 +43,9 @@ export function createWindow(): BrowserWindow {
       throw new Error('"mainWindow" is not defined')
     }
 
+    // This prevents window size change on refresh
+    windowState = loadWindowState(windowState)
+
     // Restore maximized state
     if (windowState.isMaximized) {
       mainWindow.maximize()
