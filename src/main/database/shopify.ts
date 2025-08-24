@@ -51,36 +51,21 @@ export class ShopifyRepository extends BaseDatabaseService {
     }
   }
 
+  // Set Shopify credentials
   async setShopifyCredentials(credentials: ShopifyCredentials): Promise<ShopifyCredentials> {
-    try {
-      const db = this.ensureDb()
-      await db.read()
+    const db = this.ensureDb()
+    await db.read()
 
-      const encryptedToken = safeStorage.encryptString(credentials.accessToken)
+    const encryptedToken = safeStorage.encryptString(credentials.accessToken)
 
-      // Update the encrypted access token in the database
-      db.data.settings.shopifyCredentials ??= {
-        shopName: credentials.shopName,
-        accessToken: encryptedToken.toString('base64')
-      }
-
-      // Write changes to the database
-      await db.write()
-
-      return credentials
-    } catch (error: any) {
-      // Handle specific Shopify API errors
-      if (error.statusCode === 401) {
-        throw new Error('Invalid credentials: Check your shop name or access token.')
-      } else if (error.statusCode === 403) {
-        throw new Error('Access denied: Ensure the access token has required permissions.')
-      } else if (error.message.includes('ENOTFOUND') || error.message.includes('network')) {
-        // Handle network issues for offline-first app
-        throw new Error('No internet connection. Using cached data if available.')
-      } else {
-        // Generic error handling
-        throw new Error(`Connection failed: ${error.message || 'Unknown error'}`)
-      }
+    // Update the encrypted access token in the database
+    db.data.settings.shopifyCredentials ??= {
+      shopName: credentials.shopName,
+      accessToken: encryptedToken.toString('base64')
     }
+
+    await db.write()
+
+    return credentials
   }
 }
