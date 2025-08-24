@@ -59,7 +59,6 @@ export function createWindow(): BrowserWindow {
 
     // Notify renderer process about theme change
     const newTheme = nativeTheme.shouldUseDarkColors ? 'dark' : 'light'
-    console.log('System theme changed:', newTheme)
     if (mainWindow && !mainWindow.isDestroyed()) {
       mainWindow.webContents.send('theme:systemChanged', newTheme)
     }

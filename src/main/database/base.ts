@@ -49,8 +49,19 @@ export class BaseDatabaseService {
             }
           }
         }
-        await this.db.write()
+      } else {
+        this.db.data.settings = {
+          ...{
+            theme: {
+              nativeTheme: null,
+              themeMode: 'system',
+              isColors: true
+            }
+          },
+          ...this.db.data.settings
+        }
       }
+      await this.db.write()
 
       // eslint-disable-next-line no-console
       console.log(`Database initialized at: ${this.dbPath}`)

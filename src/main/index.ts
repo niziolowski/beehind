@@ -34,7 +34,6 @@ app.whenReady().then(async () => {
   // Listen for system theme changes
   nativeTheme.on('updated', () => {
     const newTheme = nativeTheme.shouldUseDarkColors ? 'dark' : 'light'
-    console.log('System theme changed:', newTheme)
     // Notify renderer process about theme change
     if (mainWindow && !mainWindow.isDestroyed()) {
       mainWindow.webContents.send('theme:systemChanged', newTheme)

@@ -16,7 +16,7 @@ export class SettingsRepository extends BaseDatabaseService {
     const db = this.ensureDb()
     await db.read()
 
-    db.data.settings.theme.nativeTheme = nativeTheme
+    db.data.settings.theme.nativeTheme ??= nativeTheme
     await db.write()
     return nativeTheme
   }

@@ -36,7 +36,6 @@ export const useThemeStore = create<ThemeState>((set) => ({
 
       // Subscribe to system theme changes
       window.api.theme.onSystemThemeChange(async (newNativeTheme) => {
-        console.log('System theme changed:', newNativeTheme)
         // Update state with new native theme
         set((state) => ({
           ...state,
