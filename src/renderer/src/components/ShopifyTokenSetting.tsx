@@ -123,11 +123,7 @@ const ShopifyConfiguration = () => {
       </div>
 
       {modalContent && (
-        <Modal
-          active={modalContent !== null}
-          onClose={() => setModalContent(null)}
-          title={modalContent.title}
-        >
+        <Modal onClose={() => setModalContent(null)} title={modalContent.title}>
           <p>{modalContent.content}</p>
         </Modal>
       )}

@@ -3,15 +3,12 @@ import Button from './Button'
 import { useEffect } from 'react'
 
 interface ModalProps {
-  active: boolean
   title: string
   onClose: () => void
   children?: React.ReactNode
 }
 
-const Modal = ({ active, title, onClose, children }: ModalProps) => {
-  if (!active) return null
-
+const Modal = ({ title, onClose, children }: ModalProps) => {
   const handleKeyDown = (e: KeyboardEvent) => {
     if (e.key === 'Escape' || e.key === 'Enter') {
       onClose()

@@ -5,9 +5,15 @@ import { useMutation } from '@tanstack/react-query'
 export const useImportFromFile = () => {
   const { showError } = useErrorStore()
   return useMutation({
-    mutationFn: async (): Promise<void> => {
+    mutationFn: async (): Promise<{ success: boolean; error?: string }> => {
       try {
-        await window.api.database.importFromFile()
+        const result = await window.api.database.importFromFile()
+        if (result.error == 'Import cancelled') return { success: false, error: 'Import cancelled' }
+        if (result.error == 'Invalid database format') {
+          showError('Failed to import database: ' + (result.error || 'Unknown error'))
+          return { success: false, error: 'Invalid database format' }
+        }
+        return { success: true }
       } catch (error) {
         showError(
           'Failed to import database: ' + (error instanceof Error ? error.message : 'Unknown error')
@@ -23,9 +29,11 @@ export const useImportFromFile = () => {
 export const useExportToFile = () => {
   const { showError } = useErrorStore()
   return useMutation({
-    mutationFn: async (): Promise<void> => {
+    mutationFn: async (): Promise<{ success: boolean; error?: string }> => {
       try {
-        await window.api.database.exportToFile()
+        const result = await window.api.database.exportToFile()
+        if (result.error == 'Export cancelled') return { success: false, error: 'Export cancelled' }
+        return { success: true }
       } catch (error) {
         showError(
           'Failed to export database: ' + (error instanceof Error ? error.message : 'Unknown error')

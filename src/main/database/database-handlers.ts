@@ -55,7 +55,7 @@ export const setupGeneralHandlers = () => {
   )
 
   // Import database from file
-  ipcMain.handle('db:importFromFile', async (): Promise<void> => {
+  ipcMain.handle('db:importFromFile', async (): Promise<{ success: boolean; error?: string }> => {
     try {
       const result = await dialog.showOpenDialog({
         title: 'Import Database',
@@ -67,7 +67,7 @@ export const setupGeneralHandlers = () => {
       })
 
       if (result.canceled || result.filePaths.length === 0) {
-        throw new Error('Import cancelled')
+        return { success: false, error: 'Import cancelled' }
       }
 
       const filePath = result.filePaths[0]
@@ -76,12 +76,13 @@ export const setupGeneralHandlers = () => {
 
       // Basic validation of imported data
       if (!data || typeof data !== 'object' || !data.settings) {
-        throw new Error('Invalid database format')
+        return { success: false, error: 'Invalid database format' }
       }
 
       await databaseService.importData(data)
+      return { success: true }
     } catch (error) {
-      throw new Error(error instanceof Error ? error.message : 'Unknown error')
+      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' }
     }
   })
 }

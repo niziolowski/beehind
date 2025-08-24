@@ -4,6 +4,17 @@ import { useExportToFile, useImportFromFile } from '@renderer/mutations'
 import { useState } from 'react'
 import Modal from './Modal'
 
+const modalContents = {
+  import: {
+    title: 'Import Successful',
+    content: 'Your database has been successfully imported from a .json file.'
+  },
+  export: {
+    title: 'Export Successful',
+    content: 'Your database has been successfully exported to a .json file.'
+  }
+}
+
 const ShopifyConfiguration = () => {
   const useImportFromFileMutation = useImportFromFile()
   const useExportToFileMutation = useExportToFile()
@@ -25,13 +36,8 @@ const ShopifyConfiguration = () => {
       )
     ) {
       useImportFromFileMutation.mutate(undefined, {
-        onSuccess: () => {
-          setModalContent(() => {
-            return {
-              title: 'Import Successful',
-              content: 'The database import was successful.'
-            }
-          })
+        onSuccess: (res) => {
+          res.success && setModalContent(modalContents.import)
         }
       })
     }
@@ -39,13 +45,8 @@ const ShopifyConfiguration = () => {
 
   const handleExportToFile = async () => {
     useExportToFileMutation.mutate(undefined, {
-      onSuccess: () => {
-        setModalContent(() => {
-          return {
-            title: 'Export Successful',
-            content: 'The database export was successful.'
-          }
-        })
+      onSuccess: (res) => {
+        res.success && setModalContent(modalContents.export)
       }
     })
   }
@@ -80,13 +81,11 @@ const ShopifyConfiguration = () => {
           </Button>
         </div>
       </div>
-      <Modal
-        active={!!modalContent}
-        onClose={() => setModalContent(null)}
-        title={modalContent?.title || ''}
-      >
-        {modalContent?.content || ''}
-      </Modal>
+      {modalContent && (
+        <Modal onClose={() => setModalContent(null)} title={modalContent?.title || ''}>
+          {modalContent?.content || ''}
+        </Modal>
+      )}
     </>
   )
 }
