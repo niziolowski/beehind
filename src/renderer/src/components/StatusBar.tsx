@@ -1,4 +1,4 @@
-import { FiActivity, FiAlertTriangle, FiDownload, FiLoader } from 'react-icons/fi'
+import { FiActivity, FiAlertTriangle, FiDownload } from 'react-icons/fi'
 
 const StatusBar = () => {
   return (

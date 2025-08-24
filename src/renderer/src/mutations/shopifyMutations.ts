@@ -1,6 +1,5 @@
 import { useErrorStore } from '@renderer/stores'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import Shopify from 'shopify-api-node'
 
 // Get Shopify Credentials
 export const useGetShopifyCredentials = () => {
