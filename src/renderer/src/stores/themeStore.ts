@@ -16,7 +16,8 @@ export const useThemeStore = create<ThemeState>((set) => ({
   themeMode: null,
   nativeTheme: null,
   isColors: null,
-  setThemeMode: (themeMode) => set({ themeMode }),
+  setThemeMode: (themeMode) =>
+    set((state) => ({ themeMode, theme: themeMode === 'system' ? state.nativeTheme : themeMode })),
 
   setIsColors: (isColors) => set({ isColors }),
   initialize: async () => {
