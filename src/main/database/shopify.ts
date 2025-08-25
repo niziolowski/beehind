@@ -2,6 +2,8 @@ import Shopify from 'shopify-api-node'
 import { BaseDatabaseService } from './base'
 import { safeStorage } from 'electron'
 import { ShopifyCredentials } from '../types/database'
+import { fetchAllProducts, getShop } from '../api/shopify'
+import { formatShopifyProduct } from '../helpers/shopify'
 
 export class ShopifyRepository extends BaseDatabaseService {
   // Get Shopify Credentials
@@ -24,16 +26,10 @@ export class ShopifyRepository extends BaseDatabaseService {
 
   // Test Shopify connection
   async testShopifyConnection(credentials: ShopifyCredentials): Promise<Shopify.IShop> {
+    // Test connection with a lightweight API call to fetch shop details
     try {
-      // Initialize Shopify client with provided credentials
-      const shopify = new Shopify({
-        shopName: credentials.shopName,
-        accessToken: credentials.accessToken,
-        autoLimit: true
-      })
-
       // Test connection with a lightweight API call to fetch shop details
-      const shop = await shopify.shop.get()
+      const shop = await getShop(credentials)
       return shop
     } catch (error: any) {
       // Handle specific Shopify API errors
@@ -67,5 +63,16 @@ export class ShopifyRepository extends BaseDatabaseService {
     await db.write()
 
     return credentials
+  }
+
+  async getAllShopifyProducts(credentials: ShopifyCredentials): Promise<any> {
+    try {
+      const products = await fetchAllProducts(credentials)
+      const formattedProducts = products.map(formatShopifyProduct)
+      return formattedProducts
+    } catch (error) {
+      console.error('Error fetching Shopify products:', error)
+      throw error
+    }
   }
 }

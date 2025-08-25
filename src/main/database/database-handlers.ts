@@ -3,6 +3,7 @@ import { promises as fs } from 'fs'
 import { databaseService } from './index'
 import { DatabaseSchema, ShopifyCredentials, Theme, ThemeMode } from '../types/database'
 import Shopify from 'shopify-api-node'
+import { Product } from '../types/product'
 
 /**
  * Database IPC handlers
@@ -106,6 +107,14 @@ export const setupShopifyHandlers = () => {
     'shopify:testConnection',
     async (_, credentials: ShopifyCredentials): Promise<Shopify.IShop> => {
       return databaseService.shopify.testShopifyConnection(credentials)
+    }
+  )
+
+  // Get All Shopify Products
+  ipcMain.handle(
+    'shopify:getAllProducts',
+    async (_, credentials: ShopifyCredentials): Promise<Product[]> => {
+      return databaseService.shopify.getAllShopifyProducts(credentials)
     }
   )
 }

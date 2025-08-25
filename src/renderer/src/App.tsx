@@ -7,6 +7,7 @@ import Home from './components/Home'
 import StatusBar from './components/StatusBar'
 import { useEffect } from 'react'
 import { useSettingsStore } from './stores/settingsStore'
+import Products from './components/Products'
 
 function App() {
   const { initialize: initializeThemeStore } = useThemeStore()
@@ -26,7 +27,7 @@ function App() {
           <Routes>
             <Route path="/home" element={<Home />} />
             <Route path="/settings" element={<Settings />} />
-            <Route path="/products" element={<Settings />} />
+            <Route path="/products" element={<Products />} />
             <Route path="/orders" element={<Settings />} />
             <Route path="/rules" element={<Settings />} />
             <Route path="/components" element={<Settings />} />
