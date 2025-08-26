@@ -1,3 +1,3 @@
 export * from './errorStore'
-export * from './settingsStore'
+export * from './statusStore'
 export * from './themeStore'

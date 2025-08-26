@@ -1,33 +1,49 @@
 import { useProductsStore } from '@renderer/stores/products'
 import Button from './Button'
 import { useGetAllShopifyProducts } from '@renderer/mutations'
+import ProductList from './ProductList'
+import Input from './Input'
+import { FiList, FiSearch, FiTable } from 'react-icons/fi'
+import ButtonIcon from './ButtonIcon'
+import { useSearchProducts } from '@renderer/mutations/productsMutation'
+import { useState } from 'react'
 
 const Products = () => {
-  const { products } = useProductsStore()
+  const [searchTerm, setSearchTerm] = useState('')
+  const [viewMode, setViewMode] = useState<'table' | 'list'>('list')
   const fetchProducts = useGetAllShopifyProducts()
-  console.log(products)
+  const { products } = useProductsStore()
 
-  const productList = products.map((product, i) => (
-    <div className={`flex items-center gap-3 overflow-hidden bg-background`}>
-      {product.image && (
-        <img
-          src={product.image.src}
-          alt={product.title}
-          className="w-16 h-16 object-cover object-center"
-        />
-      )}
-      <div key={product.id}>
-        <div className="text-lg font-medium">{product.title}</div>
-        <p className="text-sm text-gray">{product.tags}</p>
-      </div>
-    </div>
-  ))
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value)
+  }
+
+  const { data: searchResults } = useSearchProducts(searchTerm)
 
   return (
-    <div className="p-10 flex flex-col gap-5 h-full overflow-y-scroll">
-      <h1 className="text-products font-bold italic">Products</h1>
-      <Button onClick={() => fetchProducts.refetch()}>Fetch</Button>
-      <div className="flex flex-col rounded-xl overflow-hidden">{productList}</div>
+    <div className="p-10 flex flex-col gap-5 w-full h-full overflow-y-scroll max-w-[1000px] mx-auto">
+      <div className="flex gap-5 justify-between">
+        <h1 className="text-products font-bold italic">Products</h1>
+        <Button onClick={() => fetchProducts.refetch()}>Sync From Shopify</Button>
+      </div>
+      <div className="flex w-full gap-3">
+        <Input
+          className="flex-1"
+          placeholder="Search..."
+          icon={<FiSearch />}
+          onChange={handleSearchChange}
+        />
+        <div className="flex">
+          <ButtonIcon className="size-10" onClick={() => setViewMode('list')}>
+            <FiList />
+          </ButtonIcon>
+          <ButtonIcon className="size-10" onClick={() => setViewMode('table')}>
+            <FiTable />
+          </ButtonIcon>
+        </div>
+      </div>
+
+      {viewMode === 'list' && <ProductList products={searchResults || products} />}
     </div>
   )
 }
