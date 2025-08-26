@@ -21,7 +21,7 @@ function NavItem({ children, to, className, active, onClick }: NavItemProps) {
     return color
   }, [theme, active, isColors])
 
-  const classes = `flex select-none items-center gap-2 cursor-pointer transition-all py-2 px-4 rounded-xl text-nowrap hover:brightness-90 active:scale-95 active:brightness-80 transition-all font-serif ${
+  const classes = `flex select-none items-center gap-2 cursor-pointer transition-all py-2 px-4 rounded-xl text-nowrap hover:brightness-90 active:scale-95 active:brightness-80 font-serif ${
     active && !isColors ? 'brightness-80' : ''
   } ${fontColor} ${className}`
   return (

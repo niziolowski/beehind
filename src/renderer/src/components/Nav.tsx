@@ -83,15 +83,18 @@ const Nav = () => {
       </div>
       <div className="flex flex-col gap-2 p-2">{itemsJSX}</div>
 
-      <div className="mt-auto border-t border-border h-10">
-        <NavLink
-          className={`flex w-full h-full justify-center items-center gap-2 hover:bg-lime-400 ${view === 'settings' ? 'bg-primary' : 'text-font bg-primary'}`}
-          to="/settings"
-          onClick={() => setView('settings')}
-        >
-          <FiSettings />
-          Settings
-        </NavLink>
+      <div className="mt-auto flex flex-col">
+        <div className="p-2">
+          <NavLink
+            className={`flex w-full h-full rounded-xl px-4 py-1  justify-center items-center gap-2 hover:brightness-90 active:scale-95 active:brightness-80 transition-all ${view === 'settings' ? 'bg-font text-font-inverted' : 'text-font bg-primary'}`}
+            to="/settings"
+            onClick={() => setView('settings')}
+          >
+            <FiSettings />
+            Settings
+          </NavLink>
+        </div>
+        {/* <div className="flex-none h-10 p-2 px-3 border-t border-border"></div> */}
       </div>
     </div>
   )
