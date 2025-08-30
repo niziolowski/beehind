@@ -1,5 +1,5 @@
 import { useErrorStore } from '@renderer/stores'
-import { useProductsStore } from '@renderer/stores/products'
+import { useProductsStore } from '@renderer/stores/productsStore'
 import { useQuery } from '@tanstack/react-query'
 
 // Search Products Query

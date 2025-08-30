@@ -1,7 +1,8 @@
 import { ipcMain, dialog, shell } from 'electron'
 import { promises as fs } from 'fs'
 import { databaseService } from './index'
-import { Component, DatabaseSchema, ShopifyCredentials, Theme, ThemeMode } from '../types/database'
+import { DatabaseSchema, ShopifyCredentials, Theme, ThemeMode } from '../types/database'
+import { Component } from '../types/index'
 import Shopify from 'shopify-api-node'
 import { Product } from '../types/product'
 

@@ -1,5 +1,5 @@
 import { BaseDatabaseService } from './base'
-import { Component } from '../types/database'
+import { Component } from '../types/index'
 
 export class ComponentsRepository extends BaseDatabaseService {
   async getComponents(): Promise<Component[] | null> {

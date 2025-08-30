@@ -1,6 +1,6 @@
 import { ShopifyCredentials } from '@main/types/database'
 import { useErrorStore } from '@renderer/stores'
-import { useProductsStore } from '@renderer/stores/products'
+import { useProductsStore } from '@renderer/stores/productsStore'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import Shopify from 'shopify-api-node'
 

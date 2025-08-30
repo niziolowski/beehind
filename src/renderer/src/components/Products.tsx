@@ -1,4 +1,3 @@
-import { useProductsStore } from '@renderer/stores/products'
 import Button from './Button'
 import { useGetAllShopifyProducts } from '@renderer/mutations'
 import ProductList from './ProductList'
@@ -7,6 +6,7 @@ import { FiList, FiSearch, FiTable } from 'react-icons/fi'
 import ButtonIcon from './ButtonIcon'
 import { useSearchProducts } from '@renderer/mutations/productsMutation'
 import { useState } from 'react'
+import { useProductsStore } from '@renderer/stores/productsStore'
 
 const Products = () => {
   const [searchTerm, setSearchTerm] = useState('')

@@ -6,7 +6,7 @@ interface ProductListProps {
 }
 
 const ProductList = ({ products }: ProductListProps) => {
-  const listJSX = products.map((product, i) => {
+  const listJSX = products.map((product) => {
     return (
       <div
         key={product.id}
@@ -25,7 +25,10 @@ const ProductList = ({ products }: ProductListProps) => {
             {product.tags.map((tag, i) => {
               if (i > 2) return
               return (
-                <span className="flex text-nowrap items-center bg-primary px-2 py-1 rounded-lg gap-1">
+                <span
+                  key={i}
+                  className="flex text-nowrap items-center bg-primary px-2 py-1 rounded-lg gap-1"
+                >
                   <FiTag size={12} />
                   {tag}
                 </span>

@@ -1,6 +1,7 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
-import { Component, ShopifyCredentials, Theme, ThemeMode } from '../main/types/database'
+import { ShopifyCredentials, Theme, ThemeMode } from '../main/types/database'
+import { Component } from '../main/types/index'
 import Shopify from 'shopify-api-node'
 import { Product } from '../main/types/product'
 

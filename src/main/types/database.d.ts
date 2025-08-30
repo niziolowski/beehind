@@ -1,3 +1,5 @@
+import { Component } from './index'
+
 export type Theme = 'light' | 'dark'
 export type ThemeMode = 'light' | 'dark' | 'system'
 
@@ -16,17 +18,6 @@ export interface ShopifyCredentials {
 export interface Settings {
   shopifyCredentials?: ShopifyCredentials
   theme: ThemeState
-}
-
-// Component
-export interface Component {
-  id: string
-  name: string
-  description?: string
-  quantity: number
-  unitCost?: number
-  createdAt: string
-  updatedAt: string
 }
 
 // Database schema interface
