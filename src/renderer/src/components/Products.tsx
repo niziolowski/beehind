@@ -4,7 +4,7 @@ import ProductList from './ProductList'
 import Input from './Input'
 import { FiList, FiSearch, FiTable } from 'react-icons/fi'
 import ButtonIcon from './ButtonIcon'
-import { useSearchProducts } from '@renderer/hooks/productsMutation'
+import { useSearchProducts } from '@renderer/hooks/index'
 import { useState } from 'react'
 import { useProductsStore } from '@renderer/stores/productsStore'
 
@@ -18,7 +18,7 @@ const Products = () => {
     setSearchTerm(event.target.value)
   }
 
-  const { data: searchResults } = useSearchProducts(searchTerm)
+  const searchResults = useSearchProducts(searchTerm)
 
   return (
     <div className="p-10 flex flex-col gap-5 w-full h-full overflow-y-scroll max-w-[1000px] mx-auto">

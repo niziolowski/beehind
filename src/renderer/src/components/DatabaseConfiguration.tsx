@@ -2,7 +2,7 @@ import Button from './Button'
 import { FiDownload, FiFolder, FiSave } from 'react-icons/fi'
 import { useExportToFile, useImportFromFile } from '@renderer/hooks'
 import { useState } from 'react'
-import Modal from './Modal'
+import ModalInfo from './ModalInfo'
 
 const modalContents = {
   import: {
@@ -82,9 +82,9 @@ const ShopifyConfiguration = () => {
         </div>
       </div>
       {modalContent && (
-        <Modal onClose={() => setModalContent(null)} title={modalContent?.title || ''}>
+        <ModalInfo onClose={() => setModalContent(null)} title={modalContent?.title || ''}>
           {modalContent?.content || ''}
-        </Modal>
+        </ModalInfo>
       )}
     </>
   )

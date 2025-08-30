@@ -7,8 +7,8 @@ import {
   useSetShopifyCredentials,
   useTestShopifyConnection
 } from '@renderer/hooks'
-import Modal from './Modal'
 import ButtonIcon from './ButtonIcon'
+import ModalInfo from './ModalInfo'
 
 const modalContents = {
   shopName: {
@@ -128,9 +128,9 @@ const ShopifyConfiguration = () => {
       </div>
 
       {modalContent && (
-        <Modal onClose={() => setModalContent(null)} title={modalContent.title}>
+        <ModalInfo onClose={() => setModalContent(null)} title={modalContent.title}>
           <p>{modalContent.content}</p>
-        </Modal>
+        </ModalInfo>
       )}
     </>
   )
