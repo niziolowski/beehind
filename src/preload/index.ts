@@ -1,6 +1,6 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
-import { ShopifyCredentials, Theme, ThemeMode } from '../main/types/database'
+import { Component, ShopifyCredentials, Theme, ThemeMode } from '../main/types/database'
 import Shopify from 'shopify-api-node'
 import { Product } from '../main/types/product'
 
@@ -12,6 +12,9 @@ const apiHandler = {
     openDatabaseLocation: () => ipcRenderer.invoke('db:openDatabaseLocation'),
     exportToFile: () => ipcRenderer.invoke('db:exportToFile'),
     importFromFile: () => ipcRenderer.invoke('db:importFromFile')
+  },
+  components: {
+    getComponents: (): Promise<Component[] | null> => ipcRenderer.invoke('components:getComponents')
   },
   shopify: {
     testShopifyConnection: (credentials: ShopifyCredentials): Promise<Shopify.IShop> =>

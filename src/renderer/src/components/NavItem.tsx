@@ -14,7 +14,6 @@ function NavItem({ children, to, className, active, onClick }: NavItemProps) {
   const { theme, isColors } = useThemeStore()
   const fontColor = useMemo(() => {
     let color = 'text-font'
-    console.log(theme)
     if (theme === 'light' && active && isColors) {
       color = 'text-font-inverted'
     }

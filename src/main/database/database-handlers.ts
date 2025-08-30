@@ -1,7 +1,7 @@
 import { ipcMain, dialog, shell } from 'electron'
 import { promises as fs } from 'fs'
 import { databaseService } from './index'
-import { DatabaseSchema, ShopifyCredentials, Theme, ThemeMode } from '../types/database'
+import { Component, DatabaseSchema, ShopifyCredentials, Theme, ThemeMode } from '../types/database'
 import Shopify from 'shopify-api-node'
 import { Product } from '../types/product'
 
@@ -150,6 +150,14 @@ export const setupThemeHandlers = () => {
     return databaseService.theme.setThemeIsColors(isColors)
   })
 }
+
+export const setupComponentsHandlers = () => {
+  // Get Native Theme
+  ipcMain.handle('components:getComponents', (): Promise<Component[] | null> => {
+    return databaseService.components.getComponents()
+  })
+}
+
 /**
  * Initialize database and setup handlers
  */
@@ -159,6 +167,7 @@ export const initializeDatabaseSystem = async (): Promise<void> => {
     setupGeneralHandlers()
     setupShopifyHandlers()
     setupThemeHandlers()
+    setupComponentsHandlers()
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Failed to initialize database system:', error)

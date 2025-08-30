@@ -8,6 +8,7 @@ import StatusBar from './components/StatusBar'
 import { useEffect } from 'react'
 import { useStatusStore } from './stores/statusStore'
 import Products from './components/Products'
+import Components from './components/Components'
 
 function App() {
   const { initialize: initializeThemeStore } = useThemeStore()
@@ -29,7 +30,7 @@ function App() {
             <Route path="/products" element={<Products />} />
             <Route path="/orders" element={<Settings />} />
             <Route path="/rules" element={<Settings />} />
-            <Route path="/components" element={<Settings />} />
+            <Route path="/components" element={<Components />} />
           </Routes>
           <StatusBar />
         </div>

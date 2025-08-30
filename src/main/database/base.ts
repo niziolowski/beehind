@@ -41,6 +41,7 @@ export class BaseDatabaseService {
       // Initialize with default data if database is empty
       if (!this.db.data) {
         this.db.data = {
+          components: [],
           settings: {
             theme: {
               nativeTheme: null,
@@ -109,6 +110,7 @@ export class BaseDatabaseService {
 
     // Ensure all required collections exist in the imported data
     const normalizedData: DatabaseSchema = {
+      components: data.components ?? [],
       settings: {
         theme: {
           nativeTheme: data.settings?.theme?.nativeTheme ?? null,

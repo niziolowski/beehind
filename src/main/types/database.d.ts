@@ -1,6 +1,7 @@
 export type Theme = 'light' | 'dark'
 export type ThemeMode = 'light' | 'dark' | 'system'
 
+// Settings
 export type ThemeState = {
   nativeTheme: Theme | null
   themeMode: ThemeMode
@@ -8,8 +9,8 @@ export type ThemeState = {
 }
 
 export interface ShopifyCredentials {
-  shopName: string // e.g., 'your-shop-name' (without .myshopify.com)
-  accessToken: string // Shopify private/custom app access token
+  shopName: string // without .myshopify.com
+  accessToken: string
 }
 
 export interface Settings {
@@ -17,7 +18,19 @@ export interface Settings {
   theme: ThemeState
 }
 
+// Component
+export interface Component {
+  id: string
+  name: string
+  description?: string
+  quantity: number
+  unitCost?: number
+  createdAt: string
+  updatedAt: string
+}
+
 // Database schema interface
 export interface DatabaseSchema {
+  components: Component[]
   settings: Settings
 }

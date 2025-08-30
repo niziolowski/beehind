@@ -13,6 +13,7 @@ export const getShop = async (credentials: ShopifyCredentials): Promise<Shopify.
   return shop
 }
 
+// TODO: Update to actually fetch all products (probably with batch for the initial synchronization)
 export const fetchAllProducts = async (credentials: ShopifyCredentials): Promise<any> => {
   const shopify = new Shopify({
     shopName: credentials.shopName,
