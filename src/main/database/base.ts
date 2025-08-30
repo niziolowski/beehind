@@ -39,7 +39,7 @@ export class BaseDatabaseService {
       await this.db.read()
 
       // Initialize with default data if database is empty
-      if (!this.db.data) {
+      if (!this.db.data || (this.db.data && Object.keys(this.db.data).length === 0)) {
         this.db.data = {
           components: [],
           settings: {
