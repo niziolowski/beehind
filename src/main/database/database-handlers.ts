@@ -153,10 +153,18 @@ export const setupThemeHandlers = () => {
 }
 
 export const setupComponentsHandlers = () => {
-  // Get Native Theme
+  // Get All Components
   ipcMain.handle('components:getComponents', (): Promise<Component[] | null> => {
     return databaseService.components.getComponents()
   })
+
+  // Add Component
+  ipcMain.handle(
+    'components:addComponent',
+    (_, componentData: Omit<Component, 'id' | 'updatedAt' | 'createdAt'>): Promise<Component> => {
+      return databaseService.components.addComponent(componentData)
+    }
+  )
 }
 
 /**

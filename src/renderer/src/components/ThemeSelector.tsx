@@ -1,5 +1,5 @@
 import { useThemeStore } from '@renderer/stores/themeStore'
-import { useSetIsColors, useSetThemeMode } from '@renderer/mutations'
+import { useSetIsColors, useSetThemeMode } from '@renderer/hooks'
 import ThemeCard from './ThemeCard'
 
 const ThemeSelector = () => {

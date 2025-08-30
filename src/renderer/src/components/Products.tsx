@@ -1,10 +1,10 @@
 import Button from './Button'
-import { useGetAllShopifyProducts } from '@renderer/mutations'
+import { useGetAllShopifyProducts } from '@renderer/hooks'
 import ProductList from './ProductList'
 import Input from './Input'
 import { FiList, FiSearch, FiTable } from 'react-icons/fi'
 import ButtonIcon from './ButtonIcon'
-import { useSearchProducts } from '@renderer/mutations/productsMutation'
+import { useSearchProducts } from '@renderer/hooks/productsMutation'
 import { useState } from 'react'
 import { useProductsStore } from '@renderer/stores/productsStore'
 

@@ -9,15 +9,18 @@ import { useEffect } from 'react'
 import { useStatusStore } from './stores/statusStore'
 import Products from './components/Products'
 import Components from './components/Components'
+import { useComponentsStore } from './stores'
 
 function App() {
   const { initialize: initializeThemeStore } = useThemeStore()
   const { initialize: initializeStatusStore } = useStatusStore()
+  const { initialize: initializeComponentsStore } = useComponentsStore()
 
   useEffect(() => {
     initializeThemeStore()
     initializeStatusStore()
-  }, [initializeThemeStore, initializeStatusStore])
+    initializeComponentsStore()
+  }, [initializeThemeStore, initializeStatusStore, initializeComponentsStore])
 
   return (
     <div className="flex w-full">

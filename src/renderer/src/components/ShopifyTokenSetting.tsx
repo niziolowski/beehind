@@ -6,7 +6,7 @@ import {
   useGetShopifyCredentials,
   useSetShopifyCredentials,
   useTestShopifyConnection
-} from '@renderer/mutations'
+} from '@renderer/hooks'
 import Modal from './Modal'
 import ButtonIcon from './ButtonIcon'
 

@@ -15,7 +15,11 @@ const apiHandler = {
     importFromFile: () => ipcRenderer.invoke('db:importFromFile')
   },
   components: {
-    getComponents: (): Promise<Component[] | null> => ipcRenderer.invoke('components:getComponents')
+    getComponents: (): Promise<Component[] | null> =>
+      ipcRenderer.invoke('components:getComponents'),
+    addComponent: (
+      componentData: Omit<Component, 'id' | 'createdAt' | 'updatedAt'>
+    ): Promise<Component> => ipcRenderer.invoke('components:addComponent', componentData)
   },
   shopify: {
     testShopifyConnection: (credentials: ShopifyCredentials): Promise<Shopify.IShop> =>
